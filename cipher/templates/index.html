@@ -1,6 +1,8 @@
+{% load static %}
 <html>
     <head>
         <title>Hello, my first browser based decoding tool</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
     </head>
     <body>
         <script 
@@ -12,28 +14,30 @@
         <p>{{ testparam }}</p>
         <br>
 
-        <form id='sampleForm'>
+
+        <form id='input_form'>
             {% csrf_token %}
-            <input type="text" name="formName" value="STAR">
-            <button type="submit" class="btn">ROT 13</button>
+            <input type="text" name="input_1_txt" value="STAR" class='a1'>
+            <BR>
+            <button type="submit" class="btn">Action</button>
         </form>
 
-        <div id='sampleoutput'>
-            <span id="sampleOutputName"></span>
+        <div id='output_div' class='b1'>
+            <span id="output_txt"></span>
         </div>
         <script>
             $("form").submit( function(event) {
                 event.preventDefault();
                 var form = $(this);
                 $.ajax({
-                        url: "./sample",
+                        url: "./decode_alice",
                         method: 'POST',
                         data: form.serialize(),
                         timeout: 10000,
                         dataType: "text",
                 })
                 .done( function(data) {
-                        document.getElementById( "sampleOutputName" ).innerHTML = data;     
+                        document.getElementById( "output_txt" ).innerHTML = data;     
                 })
             });
         </script>

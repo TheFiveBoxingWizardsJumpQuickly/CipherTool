@@ -3,5 +3,5 @@ from . import views, functions
 
 urlpatterns = [
     path('', views.top),
-    path('sample', functions.sample)
+    path('decode_alice', functions.decode_alice)
 ]
