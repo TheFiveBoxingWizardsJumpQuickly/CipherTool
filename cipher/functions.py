@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from cipher.fn import rot, atbash
+from cipher.fn import rot, atbash, vig_e, vig_d, beaufort, vig_d_auto, vig_e_auto
 
-def decode_alice(request):
+def decode_a(request):
     input_text = request.POST.getlist("input_1_txt")[0]
 
     output_text = ''
@@ -29,4 +29,22 @@ def decode_alice(request):
         output_text += '<br>'
 
 
+    return HttpResponse(output_text)
+
+def decode_b(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    key = request.POST.getlist("input_2_txt")[0]  
+
+    output_text = ''
+    output_text += '<B>Vigenere</B>'
+    output_text += '<br>'
+    output_text += 'Decode: ' + vig_d(input_text, key)
+    output_text += '<br>'
+    output_text += 'Encode: ' + vig_e(input_text, key)
+    output_text += '<br>'
+    output_text += 'Beaufort: ' + beaufort(input_text, key)
+    output_text += '<br>'
+    output_text += 'Auto key decode: ' + vig_d_auto(input_text, key)
+    output_text += '<br>'
+    output_text += 'Auto key encode: ' + vig_e_auto(input_text, key)
     return HttpResponse(output_text)

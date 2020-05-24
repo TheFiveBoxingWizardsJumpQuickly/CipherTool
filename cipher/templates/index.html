@@ -11,36 +11,71 @@
             crossorigin="anonymous">
         </script>
     
-        <p>{{ testparam }}</p>
-        <br>
+        <H1>{{ header_string }}</h1>
 
-
-        <form id='input_form'>
-            {% csrf_token %}
-            <input type="text" name="input_1_txt" value="STAR" class='a1'>
-            <BR>
-            <button type="submit" class="btn">Action</button>
-        </form>
+        {% csrf_token %}
+        <p>Input text</p>
+        <textarea id="input_1_txt" class='inputtextarea1'></textarea>
+        <BR>
+        <p>Key</p>
+        <textarea id="input_2_txt" class='inputtextarea2'></textarea>
+        <BR>
+        <a class="myButton" onclick="decode_action('./decode_a')">ROT</a>
+        <a class="myButton" onclick="decode_action('./decode_b')">Vig</a>
 
         <div id='output_div' class='b1'>
             <span id="output_txt"></span>
         </div>
+
         <script>
-            $("form").submit( function(event) {
-                event.preventDefault();
-                var form = $(this);
+            function decode_action(action_url) {
                 $.ajax({
-                        url: "./decode_alice",
+                        url: action_url,
                         method: 'POST',
-                        data: form.serialize(),
+                        data: {
+                            'input_1_txt': document.getElementById( "input_1_txt" ).value,
+                            'input_2_txt': document.getElementById( "input_2_txt" ).value,
+                        },
                         timeout: 10000,
                         dataType: "text",
                 })
                 .done( function(data) {
                         document.getElementById( "output_txt" ).innerHTML = data;     
                 })
-            });
+            }
         </script>
 
+        <script>
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        </script>
     </body>
 </html>
