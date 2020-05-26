@@ -15,7 +15,7 @@ def decode_help():
         kw(lregexp) : 正規表現にマッチする
         atbash(c)
         playfair_a(c,mode,mx) :2文字のみのPlayfair. c:text, mode:"d"ならdecode, その他encode, mx:Matrixのサイズ。デフォルトは5だが6*6も同様に計算できる。
-        playfair_e, playfair_d(text, table_keyword="")
+        playfair_e, playfair_d(text)
         playfair_d6: 6*6matrixのplayfair
         adfgx_e, adfgx_d(text, table_keyword, transposition_keyword)
         adfgvx_e, adfgvx_d(text, table_keyword, transposition_keyword)

@@ -12,6 +12,9 @@
         {% csrf_token %}
         <textarea id="input_1_txt" class='inputtextarea1'></textarea>
         <BR>
+        <p>Key</p>
+        <textarea id="input_2_txt" class='inputtextarea2'></textarea>
+        <BR>
 
         <div id='output_div' class='b1'>
             <span id="output_txt"></span>
@@ -21,6 +24,7 @@
         <script>
             function clearContents(){
                 document.getElementById( "input_1_txt" ).value =''
+                document.getElementById( "input_2_txt" ).value =''
             }
         </script>
 
@@ -33,7 +37,7 @@
         <script>
             $(function() {
                 $("textarea").on('keyup change', function(){
-                    decode_action('./decode_c');
+                    decode_action('./decode_b');
                 });
             });
         </script>
@@ -45,6 +49,7 @@
                         method: 'POST',
                         data: {
                             'input_1_txt': document.getElementById( "input_1_txt" ).value,
+                            'input_2_txt': document.getElementById( "input_2_txt" ).value,
                         },
                         timeout: 10000,
                         dataType: "text",

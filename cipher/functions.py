@@ -85,12 +85,33 @@ def decode_d(request):
 
 def decode_e(request):
     input_text = request.POST.getlist("input_1_txt")[0]
+    extracted_input_text = extract_integer_only(input_text)
+
+    if extracted_input_text == '':
+        return HttpResponse('')
+    else:            
+        output_text = ''
+
+        output_text += '<B>Prime factorize</B>'
+        output_text += '<br>'
+        output_text += factorize(extract_integer_only(input_text))
+        
+        return HttpResponse(output_text)
+
+def decode_f(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+
     output_text = ''
 
-    output_text += '<B>Prime factorize</B>'
+    output_text += '<B>Playfair decode</B>'
     output_text += '<br>'
-    output_text += factorize(extract_integer_only(input_text))
-    
-    return HttpResponse(output_text)
+    output_text += playfair_d(input_text)
+    output_text += '<br>'
+    output_text += '<br>'
 
+    output_text += '<B>Playfair encode</B>'
+    output_text += '<br>'
+    output_text += playfair_e(input_text)
+
+    return HttpResponse(output_text)
 
