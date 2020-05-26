@@ -15,4 +15,4 @@ def page2(request):
     return render(request, 'page2.html', {'title':'Transposition'})
 
 def page3(request):
-    return render(request, 'page3.html', {'title':'Math'})
+    return render(request, 'page3.html', {'title':'Prime factorize'})

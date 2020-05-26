@@ -54,7 +54,7 @@ def calc(n):
 
     notation = ''
     if n > p_max ** 2:
-        notation = '\n #' + str(n) + ' might have a factor lager than ' + str(p_max)
+        notation = '<BR> #' + str(n) + ' might have a factor lager than ' + str(p_max)
     elif len(factor_exp_list) == 1 and factor_exp_list[0][1] == 1 and f == '':
         notation = ' (prime)'
 
