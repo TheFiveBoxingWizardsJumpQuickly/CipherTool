@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from cipher.fn import rot, atbash, vig_e, vig_d, beaufort, vig_d_auto, vig_e_auto, rev, railfence_d, columnar_e, columnar_d, assign_digits
+from cipher.fn import *
 
 def decode_a(request):
     input_text = request.POST.getlist("input_1_txt")[0]
@@ -83,5 +83,14 @@ def decode_d(request):
 
     return HttpResponse(output_text)
 
+def decode_e(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    output_text = ''
+
+    output_text += '<B>Prime factorize</B>'
+    output_text += '<br>'
+    output_text += factorize(extract_integer_only(input_text))
+    
+    return HttpResponse(output_text)
 
 

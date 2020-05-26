@@ -2,6 +2,7 @@ from .transposition import *
 from .common import *
 from .code_tables import *
 from .base_conversion import *
+from .math import *
 
 def decode_help():
     txt='''Decode method HELP:

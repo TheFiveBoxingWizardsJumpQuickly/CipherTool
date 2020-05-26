@@ -47,3 +47,8 @@ def replace_all(text, dic):
 
 def split_by_len(text, length):
     return [text[i:i+length] for i in range(0,len(text),length)]
+
+def extract_integer_only(text):
+    import re
+    return re.sub('\\D', '', text)
+
