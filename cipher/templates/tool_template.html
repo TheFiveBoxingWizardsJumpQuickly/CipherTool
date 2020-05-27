@@ -10,8 +10,17 @@
         <H1>{{ title }}</H1>
 
         {% csrf_token %}
-        <textarea id="input_1_txt" class='inputtextarea1'></textarea>
-        <BR>
+        {% autoescape off %}
+            {% for field in fields %}
+                {{field}}
+            {% endfor %}
+        {% endautoescape %}
+        
+        {% autoescape off %}
+            {% for option in options %}
+                {{option}}
+            {% endfor %}
+        {% endautoescape %}
 
         <div id='output_div' class='b1'>
             <span id="output_txt"></span>
@@ -20,7 +29,11 @@
 
         <script>
             function clearContents(){
-                document.getElementById( "input_1_txt" ).value =''
+                {% autoescape off %}
+                    {% for clear in clears %}
+                        {{clear}}
+                    {% endfor %}
+                {% endautoescape %}
             }
         </script>
 
@@ -33,18 +46,27 @@
         <script>
             $(function() {
                 $("textarea").on('keyup change', function(){
-                    decode_action('./decode_c');
+                    action();
+                });
+            });
+            $(function() {
+                $("select").on('keyup change', function(){
+                    action();
                 });
             });
         </script>
 
         <script>
-            function decode_action(action_url) {
+            function action() {
                 $.ajax({
-                        url: action_url,
+                        url: {{action_url | safe}},
                         method: 'POST',
                         data: {
-                            'input_1_txt': document.getElementById( "input_1_txt" ).value,
+                            {% autoescape off %}
+                                {% for data_field in data_fields %}
+                                    {{data_field}}
+                                {% endfor %}
+                            {% endautoescape %}
                         },
                         timeout: 10000,
                         dataType: "text",

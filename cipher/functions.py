@@ -2,13 +2,18 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from cipher.fn import *
 
-def decode_a(request):
+def action_a(request):
     input_text = request.POST.getlist("input_1_txt")[0]
+    option_1 = request.POST.getlist("opt_1")[0]
+    if option_1 == '1':
+        nc = True
+    else:
+        nc = False
 
     output_text = ''
     output_text += '<B>Atbash</B>'
     output_text += '<br>'
-    output_text +=  atbash(input_text)
+    output_text +=  atbash(input_text,nc)
 
     output_text += '<br>'
 
@@ -17,7 +22,7 @@ def decode_a(request):
     output_text += '<br>'
     for i in range(26):
         output_text += str(i).zfill(2) + ': '
-        output_text += rot(input_text,i)
+        output_text += rot(input_text,i,nc)
         output_text += '<br>'
     
     output_text += '<br>'
@@ -25,31 +30,36 @@ def decode_a(request):
     output_text += '<br>'
     for i in range(26):
         output_text += str(i).zfill(2) + ': '
-        output_text += atbash(rot(input_text,i))
+        output_text += atbash(rot(input_text,i,nc))
         output_text += '<br>'
 
 
     return HttpResponse(output_text)
 
-def decode_b(request):
+def action_b(request):
     input_text = request.POST.getlist("input_1_txt")[0]
     key = request.POST.getlist("input_2_txt")[0]  
+    option_1 = request.POST.getlist("opt_1")[0]
+    if option_1 == '1':
+        nc = True
+    else:
+        nc = False
 
     output_text = ''
     output_text += '<B>Vigenere</B>'
     output_text += '<br>'
-    output_text += 'Decode: ' + vig_d(input_text, key)
+    output_text += 'Decode: ' + vig_d(input_text, key, nc)
     output_text += '<br>'
-    output_text += 'Encode: ' + vig_e(input_text, key)
+    output_text += 'Encode: ' + vig_e(input_text, key, nc)
     output_text += '<br>'
-    output_text += 'Beaufort: ' + beaufort(input_text, key)
+    output_text += 'Beaufort: ' + beaufort(input_text, key, nc)
     output_text += '<br>'
-    output_text += 'Auto key decode: ' + vig_d_auto(input_text, key)
+    output_text += 'Auto key decode: ' + vig_d_auto(input_text, key, nc)
     output_text += '<br>'
-    output_text += 'Auto key encode: ' + vig_e_auto(input_text, key)
+    output_text += 'Auto key encode: ' + vig_e_auto(input_text, key, nc)
     return HttpResponse(output_text)
 
-def decode_c(request):
+def action_c(request):
     input_text = request.POST.getlist("input_1_txt")[0]
     output_text = ''
     output_text += '<B>Reverse</B>'
@@ -66,7 +76,7 @@ def decode_c(request):
 
     return HttpResponse(output_text)
 
-def decode_d(request):
+def action_d(request):
     input_text = request.POST.getlist("input_1_txt")[0]
     key = request.POST.getlist("input_2_txt")[0]
     output_text = ''
@@ -83,7 +93,7 @@ def decode_d(request):
 
     return HttpResponse(output_text)
 
-def decode_e(request):
+def action_e(request):
     input_text = request.POST.getlist("input_1_txt")[0]
     extracted_input_text = extract_integer_only(input_text)
 
@@ -98,9 +108,8 @@ def decode_e(request):
         
         return HttpResponse(output_text)
 
-def decode_f(request):
+def action_f(request):
     input_text = request.POST.getlist("input_1_txt")[0]
-
     output_text = ''
 
     output_text += '<B>Playfair decode</B>'
@@ -114,4 +123,3 @@ def decode_f(request):
     output_text += playfair_e(input_text)
 
     return HttpResponse(output_text)
-

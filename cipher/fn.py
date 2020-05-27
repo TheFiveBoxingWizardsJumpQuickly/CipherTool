@@ -6,14 +6,14 @@ from .math import *
 
 def decode_help():
     txt='''Decode method HELP:
-        rot_a(c,k) : 1文字のみのRot. c:text, k:Rot num
+        rot_a(c,k) : 1文字のみのRot. c:text, k:Rot num, , nc:number convert flag
         vig_a(c,k,type) : 1文字のみのVig. c:text, k:key, type:"d"ならdecode, その他encode
         rot(c,k) : Rot. c:text, k:Rot num
-        vig_e(c,k), vig_d(c,k), beaufort(c,k): Vig encode & decode, Beaufort. c:text, k:key
-        vig_e_auto(c,k), vig_d_auto(c,k): Auto key Vig encode & decode. c:text, k:key
+        vig_e(c,k,nc=False), vig_d(c,k,nc=False), beaufort(c,k,nc=False): Vig encode & decode, Beaufort. c:text, k:key, nc:number convert flag
+        vig_e_auto(c,k,nc=False), vig_d_auto(c,k,nc=False): Auto key Vig encode & decode. c:text, k:key, nc:number convert flag
         rev(c) : Reverse
         kw(lregexp) : 正規表現にマッチする
-        atbash(c)
+        atbash(c, nc:number convert flag)
         playfair_a(c,mode,mx) :2文字のみのPlayfair. c:text, mode:"d"ならdecode, その他encode, mx:Matrixのサイズ。デフォルトは5だが6*6も同様に計算できる。
         playfair_e, playfair_d(text)
         playfair_d6: 6*6matrixのplayfair
@@ -125,56 +125,107 @@ def vig_a(c,k,type):
         t=0
     return rot_a(c,t, type)
 
-def rot(c,k):
+def rot(c,k,nc=False):
     l=len(c)
     p=""
+    if nc:
+        target = list_A + list_a + list_0
+    else:
+        target = list_A + list_a
+
     for i in range(l):
-        p+=rot_a(c[i],k)
+        if c[i] in target:
+            p+=rot_a(c[i],k)
+        else:
+            p+=c[i]       
     return p
 
-def vig_e(c,k):
+def vig_e(c,k,nc=False):
     l_c=len(c)
     l_k=len(k)
     p=""
+    if nc:
+        target = list_A + list_a + list_0
+    else:
+        target = list_A + list_a
+    
+    j=0
     for i in range(l_c):
-        s=k[i % l_k]
-        p+=vig_a(c[i],s,"encode")
+        if c[i] in target:
+            p+=vig_a(c[i],k[j],"encode")
+            j = (j + 1) % l_k
+        else:
+            p+=c[i]
     return p
 
-def vig_d(c,k):
+def vig_d(c,k, nc=False):
     l_c=len(c)
     l_k=len(k)
     p=""
+    if nc:
+        target = list_A + list_a + list_0
+    else:
+        target = list_A + list_a
+    
+    j=0
     for i in range(l_c):
-        s=k[i % l_k]
-        p+=vig_a(c[i],s,"decode")
+        if c[i] in target:
+            p+=vig_a(c[i],k[j],"decode")
+            j = (j + 1) % l_k
+        else:
+            p+=c[i]
     return p
 
-def beaufort(c,k):
+def beaufort(c,k,nc=False):
     l_c=len(c)
     l_k=len(k)
     p=""
+    if nc:
+        target = list_A + list_a + list_0
+    else:
+        target = list_A + list_a
+    
+    j=0
     for i in range(l_c):
-        s=k[i % l_k]
-        p+=vig_a(c[i],s,"beaufort")
+        if c[i] in target:
+            p+=vig_a(c[i],k[j],"beaufort")
+            j = (j + 1) % l_k
+        else:
+            p+=c[i]
     return p
 
-def vig_e_auto(c,k):
+def vig_e_auto(c,k,nc=False):
     l_c=len(c)
     p=""
+    if nc:
+        target = list_A + list_a + list_0
+    else:
+        target = list_A + list_a
+    j=0
     for i in range(l_c):
-        s=k[i]
-        p+=vig_a(c[i],s,"encode")
-        k+=c[i]
+        if c[i] in target:
+            p+=vig_a(c[i],k[j],"encode")
+            k+=c[i]
+            j = j + 1
+        else:
+            p+=c[i]
     return p
 
-def vig_d_auto(c,k):
+def vig_d_auto(c,k,nc=False):
     l_c=len(c)
     p=""
+    if nc:
+        target = list_A + list_a + list_0
+    else:
+        target = list_A + list_a
+    j=0
     for i in range(l_c):
-        s=k[i]
-        p+=vig_a(c[i],s,"decode")
-        k+=vig_a(c[i],s,"decode")
+        if c[i] in target:
+            p+=vig_a(c[i],k[j],"decode")
+            k+=vig_a(c[i],k[j],"decode")
+            j = j + 1
+        else:
+            p+=c[i]
     return p
 
 def kw(regexp):
@@ -187,14 +238,18 @@ def kw(regexp):
     list=[w for w in list_all if re.match(regexp, w)]
     return(list)
 
-def atbash(c):
+def atbash(c,nc=False):
     list_A_atbash =rev(list_A)
     list_a_atbash=list_A_atbash.lower()
     list_0_atbash=rev(list_0_for_atbash)
     tr_A=str.maketrans(list_A,list_A_atbash)
     tr_a=str.maketrans(list_a,list_a_atbash)
     tr_0=str.maketrans(list_0_for_atbash,list_0_atbash)
-    return(c.translate(tr_A).translate(tr_a).translate(tr_0))
+    if nc:
+        return(c.translate(tr_A).translate(tr_a).translate(tr_0))
+    else:
+        return(c.translate(tr_A).translate(tr_a))
+
 
 def hexbash(c):
     c=c.lower()
