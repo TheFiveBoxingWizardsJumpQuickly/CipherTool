@@ -1,0 +1,185 @@
+{% load static %}
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <meta name="viewport" content="width=device-width" >
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    <body>
+        <div class="menu_bar"><a href='./'>HOME</a> <a href='' onclick="clearContents()">CLEAR</a></div>
+        <H1>{{ title }}</H1>
+
+        {% csrf_token %}
+        {% autoescape off %}
+            {% for field in fields %}
+                {{field}}
+            {% endfor %}
+        {% endautoescape %}
+        
+        
+        <div style="float:left;" class="cp_ipselect cp_sl01 small"> 
+            <select required id="opt_1">
+                <option value="" hidden>Choose</option>
+                <option value="1" selected>I</option>
+                <option value="2">II</option>
+                <option value="3">III</option>
+                <option value="4">IV</option>
+                <option value="5">V</option>
+            </select>
+        </div>
+        <div style="float:left;" margin="40px"><p>Right Roter</p></div>
+        <div style="clear:both;"></div>
+
+        <div style="float:left;" class="cp_ipselect cp_sl01 small"> 
+            <select required id="opt_2">
+                <option value="" hidden>Choose</option>
+                <option value="1">I</option>
+                <option value="2" selected>II</option>
+                <option value="3">III</option>
+                <option value="4">IV</option>
+                <option value="5">V</option>
+            </select>
+        </div>
+        <div style="float:left;" margin="40px"><p>Mid Roter</p></div>
+        <div style="clear:both;"></div>
+
+        <div style="float:left;" class="cp_ipselect cp_sl01 small"> 
+            <select required id="opt_3">
+                <option value="" hidden>Choose</option>
+                <option value="1">I</option>
+                <option value="2">II</option>
+                <option value="3" selected>III</option>
+                <option value="4">IV</option>
+                <option value="5">V</option>
+            </select>
+        </div>
+        <div style="float:left;" margin="40px"><p>Left Roter</p></div>
+        <div style="clear:both;"></div>
+
+
+        <div style="float:left;" class="cp_ipselect cp_sl01 small"> 
+            <select required id="opt_4">
+                <option value="" hidden>Choose</option>
+                <option value="A" selected>A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+        </div>
+        <div style="float:left;" margin="40px"><p>Reflector</p></div>
+        <div style="clear:both;"></div>
+
+        <div style="float:left;"> 
+            <input size ="3", maxlength="3", id="opt_5">
+        </div>
+        <div style="float:left;" margin="40px"><p>Rotator Key</p></div>
+        <div style="clear:both;"></div>
+
+        <div style="float:left;"> 
+            <input size ="3", maxlength="3", id="opt_6">
+        </div>
+        <div style="float:left;" margin="40px"><p>Ring Setting Key</p></div>
+        <div style="clear:both;"></div>
+
+        <div style="float:left;"> 
+            <input size ="45", id="opt_7">
+        </div>
+        <div style="float:left;" margin="40px"><p>Plug board</p></div>
+        <div style="clear:both;"></div>
+
+        <div id='output_div' class='b1'>
+            <span id="output_txt"></span>
+        </div>
+
+
+        <script>
+            function clearContents(){
+                {% autoescape off %}
+                    {% for clear in clears %}
+                        {{clear}}
+                    {% endfor %}
+                {% endautoescape %}
+            }
+        </script>
+
+        <script 
+            src="https://code.jquery.com/jquery-3.3.1.min.js" 
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
+            crossorigin="anonymous">
+        </script>
+
+        <script>
+            $(function() {
+                $("textarea").on('keyup change', function(){
+                    action();
+                });
+            });
+            $(function() {
+                $("select").on('keyup change', function(){
+                    action();
+                });
+            });
+            $(function() {
+                $("input").on('keyup change', function(){
+                    action();
+                });
+            });
+        </script>
+
+        <script>
+            function action() {
+                $.ajax({
+                        url: {{action_url | safe}},
+                        method: 'POST',
+                        data: {
+                            "input_1_txt": document.getElementById( "input_1_txt" ).value,
+                            "opt_1": document.getElementById( "opt_1" ).value,
+                            "opt_2": document.getElementById( "opt_2" ).value,
+                            "opt_3": document.getElementById( "opt_3" ).value,
+                            "opt_4": document.getElementById( "opt_4" ).value,
+                            "opt_5": document.getElementById( "opt_5" ).value,
+                            "opt_6": document.getElementById( "opt_6" ).value,
+                            "opt_7": document.getElementById( "opt_7" ).value,
+                        },
+                        timeout: 10000,
+                        dataType: "text",
+                })
+                .done( function(data) {
+                        document.getElementById( "output_txt" ).innerHTML = data;     
+                })
+            }
+        </script>
+
+        <script>
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

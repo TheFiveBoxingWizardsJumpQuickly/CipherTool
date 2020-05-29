@@ -3,6 +3,8 @@ from .common import *
 from .code_tables import *
 from .base_conversion import *
 from .math import *
+from .enigma import enigma, plugboard_gen
+from .rsa import *
 
 def decode_help():
     txt='''Decode method HELP:
@@ -27,6 +29,9 @@ def decode_help():
         bifid_e, bifid_d(text, table_keyword="")
         abc012(text)
         hexbash(c)
+        enigma(text, rotor_left_id, rotor_mid_id, rotor_right_id, reflector_id, rotor_key,ringsetting_key,plugboard):
+            text: encode/decode phrase, roter_*_id: 1-5, reflector_id: A-C, rotor_key: 3 letters (ex. XWB),
+                  ringsetting_key: 3 letters (ex. FVN), plugboard: letter paris list (ex. ['PO', 'ML', 'IU'])  
         '''
     print(txt)
 
