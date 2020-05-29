@@ -190,12 +190,17 @@ def action_h(request):
     if p == 0 or q == 0: return HttpResponse(output_text)
 
     output_text += '<br>'
-    output_text += 'p = ' + str(n) + '<br>'
-    output_text += 'q = ' + str(n) + '<br>'
+    output_text += 'p = ' + str(p) + '<br>'
+    output_text += 'q = ' + str(q) + '<br>'
     output_text += 'check: p*q = ' + str(p*q) + '<br>'
     output_text += 'check: (n) = ' + str(n) + '<br>'
-    output_text += 'calculated d = ' + str(rsa_decode(m, e, n, p, q)[1]) + '<br>'
-    output_text += 'RSA Decode: ' + str(rsa_decode(m, e, n, p, q)[0]) + '<br>'
+
+    [decode, d] = rsa_decode(m, e, n, p, q)
+    if d == 0:
+        output_text += 'Modular inverse does not exist <br>'
+    else:
+        output_text += 'calculated d = ' + str(rsa_decode(m, e, n, p, q)[1]) + '<br>'
+        output_text += 'RSA Decode: ' + str(rsa_decode(m, e, n, p, q)[0]) + '<br>'
 
     return HttpResponse(output_text)
 

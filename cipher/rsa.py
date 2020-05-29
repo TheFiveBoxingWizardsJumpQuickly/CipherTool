@@ -10,7 +10,7 @@ def xgcd(a, b):
 def modinv(a, m):
     g, x, y = xgcd(a, m)
     if g != 1:
-        raise Exception('modular inverse does not exist')
+        return 0
     else:
         return x % m
 
