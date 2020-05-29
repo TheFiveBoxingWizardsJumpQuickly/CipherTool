@@ -4,7 +4,7 @@ from .code_tables import *
 from .base_conversion import *
 from .math import *
 from .enigma import enigma, plugboard_gen
-from .rsa import *
+from .misc import *
 
 def decode_help():
     txt='''Decode method HELP:

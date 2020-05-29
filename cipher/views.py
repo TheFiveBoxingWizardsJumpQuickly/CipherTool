@@ -12,6 +12,7 @@ input_2_num_e = '<div style="float:left;"><p>e:</p></div><div style="float:left;
 input_3_num_n = '<div style="float:left;"><p>n:</p></div><div style="float:left;" width="100%"><textarea id="input_3_txt" class="inputtextarea2" inputmode="numeric""></textarea></div><div style="clear:both;"></div>'
 input_4_num_p = '<div style="float:left;"><p>p:</p></div><div style="float:left;" width="100%"><textarea id="input_4_txt" class="inputtextarea2" inputmode="numeric""></textarea></div><div style="clear:both;"></div>'
 input_5_num_q = '<div style="float:left;"><p>q:</p></div><div style="float:left;" width="100%"><textarea id="input_5_txt" class="inputtextarea2" inputmode="numeric""></textarea></div><div style="clear:both;"></div>'
+input_1_num_length = '<p>Length<p><textarea id="input_1_txt" class="inputtextarea2" inputmode="numeric"></textarea><BR>'
 clear_1 = 'document.getElementById( "input_1_txt" ).value =""'
 clear_2 = 'document.getElementById( "input_2_txt" ).value =""'
 clear_3 = 'document.getElementById( "input_3_txt" ).value =""'
@@ -35,6 +36,23 @@ option_numeric_flag = \
         </div>
 '''
 
+option_password_generator = \
+'''
+        <div class="cp_ipselect cp_sl01">
+            <select required id=opt_1>
+                <option value="" hidden>Choose</option>
+                <option value="0" selected>A-Z, a-z, 0-9</option>
+                <option value="1">A-Z, a-z, 0-9, !@#$%^&</option>
+                <option value="2">A-Z, a-z</option>
+                <option value="3">A-Z</option>
+                <option value="4">a-z</option>
+                <option value="5">0-9</option>
+                <option value="6">A-Z, a-z, !@#$%^&</option>
+                <option value="7">A-Z, 0-9</option>
+                <option value="8">a-z, 0-9</option>
+            </select>
+        </div>
+'''
 
 def index(request):
     return render(request, 'index.html', {})
@@ -49,7 +67,7 @@ def page1(request):
         'clears':[clear_1],
         'data_fields':[data_field_1,data_opt_1],
         'options':[option_numeric_flag],
-        'action_url':'"./action_a"',
+        'action_url':'"./action_1"',
     })
 
 def page2(request):
@@ -60,18 +78,18 @@ def page2(request):
         'clears':[clear_1],
         'data_fields':[data_field_1],
         'options':'',
-        'action_url':'"./action_c"',
+        'action_url':'"./action_2"',
     })
 
 def page3(request):
     return render(request, tool_template, 
     {
-        'title':'Prime factorize',
+        'title':'Prime factor',
         'fields':[input_1_num],
         'clears':[clear_1],
         'data_fields':[data_field_1],
         'options':'',
-        'action_url':'"./action_e"',
+        'action_url':'"./action_3"',
     })
 
 def page4(request):
@@ -82,7 +100,7 @@ def page4(request):
         'clears':[clear_1,clear_2],
         'data_fields':[data_field_1, data_field_2,data_opt_1],
         'options':[option_numeric_flag],
-        'action_url':'"./action_b"',
+        'action_url':'"./action_4"',
     })
 
 def page5(request):
@@ -93,7 +111,7 @@ def page5(request):
         'clears':[clear_1,clear_2],
         'data_fields':[data_field_1, data_field_2],
         'options':'',
-        'action_url':'"./action_d"',
+        'action_url':'"./action_5"',
     })
 
 def page6(request):
@@ -104,7 +122,7 @@ def page6(request):
         'clears':[clear_1],
         'data_fields':[data_field_1],
         'options':'',
-        'action_url':'"./action_f"',
+        'action_url':'"./action_6"',
     })
 
 def page7(request):
@@ -115,7 +133,7 @@ def page7(request):
         'clears':[clear_1],
         'data_fields':[data_field_1],
         'options':'',
-        'action_url':'"./action_g"',
+        'action_url':'"./action_7"',
     })
 
 def page8(request):
@@ -126,5 +144,16 @@ def page8(request):
         'clears':[clear_1, clear_2, clear_3, clear_4, clear_5],
         'data_fields':[data_field_1, data_field_2, data_field_3, data_field_4, data_field_5],
         'options':'',
-        'action_url':'"./action_h"',
+        'action_url':'"./action_8"',
+    })
+
+def page9(request):
+    return render(request, tool_template, 
+    {
+        'title':'Password generator',
+        'fields':[input_1_num_length],
+        'clears':[clear_1],
+        'data_fields':[data_field_1, data_opt_1],
+        'options':[option_password_generator],
+        'action_url':'"./action_9"',
     })
