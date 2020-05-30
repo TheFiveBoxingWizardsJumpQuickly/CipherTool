@@ -28,22 +28,34 @@ def mixed_alphabet(keyword, combined=False):
             result+=s
             already_appeared.append(s)
     return result
-    
-def mixed_alphanumeric(keyword):
-    kw_alphabet_added = keyword.upper() + "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+def unique(text):
     already_appeared=[]
     result =""
-    for s in kw_alphabet_added:
+    for s in text:
         if not s in already_appeared:
             result+=s
             already_appeared.append(s)
     return result
 
-def replace_all(text, dic):
+def mixed_alphanumeric(keyword):
+    kw_alphabet_added = keyword.upper() + "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    return unique(kw_alphabet_added)
+
+def replace_all_words(text, dic):
+    #this may be fast, but if the words after conversion is included in the map_from table, duplicatedly affected and get wrong. 
     for i, j in dic.items():
         text = text.replace(i, j)
     return text
+
+def replace_all(text, table_from, table_to):
+    result =''
+    for s in text:
+        if s in table_from:
+            result += table_to[table_from.find(s)]
+        else:
+            result += s
+    return result
 
 def split_by_len(text, length):
     return [text[i:i+length] for i in range(0,len(text),length)]
@@ -51,4 +63,6 @@ def split_by_len(text, length):
 def extract_integer_only(text):
     import re
     return re.sub('\\D', '', text)
+
+
 

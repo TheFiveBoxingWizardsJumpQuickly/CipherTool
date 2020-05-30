@@ -1,9 +1,11 @@
 from .common import *
+from .code_tables import *
+
 def deca(list):
     result = ""
     for i in list:
         if str(i).isdecimal():
-            if 32 < int(i) <127:
+            if 31 < int(i) <127:
                 result+=chr(int(i))
             else:
                 result += "("+str(i)+")"
@@ -86,3 +88,21 @@ def uudecode(a, bin_output=False):
         return c
     else:
         return "".join(e)
+
+def Base_10_to_b(n, b):
+    if (int(n/b)):
+        return Base_10_to_b(int(n/b), b) + list_base36[n % b]
+    return list_base36[n % b]
+
+def base_a_to_base_b_onenumber(n, a, b):
+    try:
+        return Base_10_to_b(int(n, a), b)
+    except:
+        return "#"
+    
+def base_a_to_base_b(nlist, a, b):
+    result=[]
+    for n in nlist:
+        result.append(base_a_to_base_b_onenumber(n, a, b))
+
+    return result

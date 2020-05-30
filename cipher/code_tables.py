@@ -1,5 +1,5 @@
 def code_table_e(text, table_dict, bin_swap_dict, bin_code=False, delimiter = " "):
-    from common import replace_all
+    from .common import replace_all
     converted=""
 
     for s in text[:]:
@@ -14,7 +14,7 @@ def code_table_e(text, table_dict, bin_swap_dict, bin_code=False, delimiter = " 
     return converted
 
 def code_table_d(text, table_dict, bin_swap_dict, bin_code=False, delimiter=" "):
-    from common import replace_all
+    from .common import replace_all
     if bin_code:
         table_dict_inv = dict((replace_all(j,bin_swap_dict),i) for (i,j) in table_dict.items())
     else:
@@ -38,6 +38,7 @@ list_a=list_A.lower()
 list_0="0123456789"
 list_0_for_atbash="123456789"
 list_hex="0123456789abcdef"
+list_base36="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 polybius_table = "ABCDEFGHIKLMNOPQRSTUVWXYZ"
 
 morse_code_table = {

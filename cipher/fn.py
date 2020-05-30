@@ -24,7 +24,7 @@ def decode_help():
         morse_d, morse_e (text, bin_code=False, delimiter=" ") : bin_code == Trueの場合、-.の代わりに01を使用したMorse. 
         bacon1_d, bacon1_e, bacon2_d, bacon2_e : Bacon cipher. 入力の仕方はmorseと同じ。Bacon1はIとJ, UとVを同一視する。Bacon2はいずれも別々に処理。 
         columnar_e, columnar_d (c,col) : colには順番のリストを入れる。キーワードからassign_digits(x)で生成できる
-        affine_e(text, a, b): aは掛け算、bは足し算部分
+        affine_e(text, a, b), affine_d(text, a, b): aは掛け算、bは足し算部分
         railfence_e, railfence_d(text, rails, offset=0)
         bifid_e, bifid_d(text, table_keyword="")
         abc012(text)
@@ -32,6 +32,8 @@ def decode_help():
         enigma(text, rotor_left_id, rotor_mid_id, rotor_right_id, reflector_id, rotor_key,ringsetting_key,plugboard):
             text: encode/decode phrase, roter_*_id: 1-5, reflector_id: A-C, rotor_key: 3 letters (ex. XWB),
                   ringsetting_key: 3 letters (ex. FVN), plugboard: letter paris list (ex. ['PO', 'ML', 'IU'])  
+        text_split(text, step, sep = ' ')
+        table_subtitution(text, method) the method should be the right name. See the code for avaliable names.
         '''
     print(txt)
 
@@ -433,13 +435,72 @@ def affine_e_a(text, a, b):
     position = list.find(text)
     converted= (position*a + b) % l
     return "".join(list[converted])
+
+def affine_d_a(text, a, b):
+    if list_A.find(text) >=0:
+        list= list_A
+    elif list_a.find(text) >=0:
+        list= list_a
+    elif list_0.find(text) >=0:
+        list= list_0
+    else:
+        return text 
     
+    l = len(list)
+
+    if a == 0:
+        x = 0
+    else:
+        g, x, y = xgcd(a, l)
+        if g != 1:
+            return '#'
+    
+    position = list.find(text)
+    converted= (position*x - b*x) % l
+    return "".join(list[converted])
+
 def affine_e(text, a, b):
     l=len(text)
     converted=""
     for i in range(l):
         converted+=affine_e_a(text[i], a, b)
     return converted
+
+def affine_d(text, a, b):
+    l=len(text)
+    converted=""
+    for i in range(l):
+        converted+=affine_d_a(text[i], a, b)
+    return converted
+
+def text_split(text, step, sep = ' '):
+    result =''
+    for i in range(0,len(text),step):
+        result += text[i:i+step] + sep
+    result = result[:-1]
+    return result
+
+def table_subtitution(text, method):
+    if method == 'A-a swap':
+        t1 = list_A + list_a
+        t2 = list_a + list_A
+    elif method == 'Morse .- swap':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = '6789012345nj?wtqu?mbryiasxfkoeg?dpl?' + 'NJ?WTQU?MBRYIASXFKOEG?DPL?'
+    elif method == 'Morse reverse':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = '9876543210nv?uelwhi?kfmaopyrstdbgxq?' + 'NV?UELWHI?KFMAOPYRSTDBGXQ?'
+    elif method == 'Morse .- swap and reverse':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = '4321098765a?cgtyd?mvrqinsxlkoewjupfz' + 'A?CGTYD?MVRQINSXLKOEWJUPFZ'
+    elif method == 'US keyboard left shift':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz-=[]\;,./`ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = '`123456789?vxswdfguhjknbio?earycqzt?0-p[]lm,.??VXSWDFGUHJKNBIO?EARYCQZT?'
+    elif method == 'US keyboard right shift':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz-=[]\;,./`ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = '234567890-snvfrghjokl;,mp[wtdyibecux=?]\?\'./?1SNVFRGHJOKL;,MP[WTDYIBECUX'
+
+    return replace_all(text, t1, t2)
 
 # SECOM cipher
 # http://users.telenet.be/d.rijmenants/en/secom.htm
