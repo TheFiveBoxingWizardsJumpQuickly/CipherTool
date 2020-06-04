@@ -1,0 +1,112 @@
+{% load static %}
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <meta name="viewport" content="width=device-width" >
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    <body>
+        <div class="menu_bar"><a href='./'>HOME</a> <a href='' onclick="clearContents()">CLEAR</a></div>
+        <H1>{{ title }}</H1>
+
+        {% csrf_token %}
+        <div class="cp_ipselect cp_sl01">
+            <select required id=opt_1>
+                <option value="">Choose</option>
+                <option value="0">Japanese Traditional Month Name</option>
+                <option value="1">Zodiac</option>
+                <option value="2">十二支 (Japanese Zodiac)</option>
+                <option value="3">Hiragana table</option>
+                <option value="4">Katakana table</option>
+            </select>
+        </div>
+
+        <div id='output_div' class='b1'>
+            <span id="output_txt"></span>
+        </div>
+
+
+        <script>
+            function clearContents(){
+                {% autoescape off %}
+                    {% for clear in clears %}
+                        {{clear}}
+                    {% endfor %}
+                {% endautoescape %}
+            }
+        </script>
+
+        <script 
+            src="https://code.jquery.com/jquery-3.3.1.min.js" 
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
+            crossorigin="anonymous">
+        </script>
+
+        <script>
+            $(function() {
+                $("textarea").on('keyup change', function(){
+                    action();
+                });
+            });
+            $(function() {
+                $("select").on('keyup change', function(){
+                    action();
+                });
+            });
+        </script>
+
+        <script>
+            function action() {
+                $.ajax({
+                        url: {{action_url | safe}},
+                        method: 'POST',
+                        data: {
+                            {% autoescape off %}
+                                {% for data_field in data_fields %}
+                                    {{data_field}}
+                                {% endfor %}
+                            {% endautoescape %}
+                        },
+                        timeout: 10000,
+                        dataType: "text",
+                })
+                .done( function(data) {
+                        document.getElementById( "output_txt" ).innerHTML = data;     
+                })
+            }
+        </script>
+
+        <script>
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -262,3 +262,23 @@ def page16(request):
         'options':'',
         'action_url':'"./action_16"',
     })
+
+def page17(request):
+    return render(request, tool_template, 
+    {
+        'title':'Phonetic alphabet',
+        'fields':[input_1],
+        'clears':[clear_1],
+        'data_fields':[data_field_1, data_opt_1],
+        'options':[option_en_dec_mode],
+        'action_url':'"./action_17"',
+    })
+
+def page18(request):
+    return render(request, 'tool_template_riddletables.html', 
+    {
+        'title':'Riddle Tables',
+        'clears':'',
+        'data_fields':[data_opt_1],
+        'action_url':'"./action_18"',
+    })

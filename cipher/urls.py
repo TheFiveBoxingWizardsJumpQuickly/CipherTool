@@ -19,6 +19,8 @@ urlpatterns = [
     path('page14', views.page14),
     path('page15', views.page15),
     path('page16', views.page16),
+    path('page17', views.page17),
+    path('page18', views.page18),
     path('action_1', functions.action_1),
     path('action_2', functions.action_2),
     path('action_3', functions.action_3),
@@ -35,4 +37,6 @@ urlpatterns = [
     path('action_14', functions.action_14),
     path('action_15', functions.action_15),
     path('action_16', functions.action_16),
+    path('action_17', functions.action_17),
+    path('action_18', functions.action_18),
 ]

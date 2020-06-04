@@ -80,3 +80,28 @@ abc012_table = {
     'U':'20', 'V':'21', 'W':'22', 'X':'23', 'Y':'24', 'Z':'25',
     ' ' : '/'    
 }
+
+#International Radiotelephony Spelling Alphabet (NATO phonetic alphabet)
+spelling_alphabet_icao_2008 = {
+'a':'alfa', 'b':'bravo', 'c':'charlie', 'd':'delta', 'e':'echo', 'f':'foxtrot', 'g':'golf', 'h':'hotel', 'i':'india', 'j':'juliett', 'k':'kilo', 'l':'lima', 'm':'mike', 'n':'november', 'o':'oscar', 'p':'papa', 'q':'quebec', 'r':'romeo', 's':'sierra', 't':'tango', 'u':'uniform', 'v':'victor', 'w':'whiskey', 'x':'x-ray', 'y':'yankee', 'z':'zulu'
+}
+
+#1951 ICAO code words
+spelling_alphabet_icao_1951 = {
+'a':'alfa', 'b':'bravo', 'c':'coca', 'd':'delta', 'e':'echo', 'f':'foxtrot', 'g':'gold', 'h':'hotel', 'i':'india', 'j':'juliett', 'k':'kilo', 'l':'lima', 'm':'metro', 'n':'nectar', 'o':'oscar', 'p':'papa', 'q':'quebec', 'r':'romeo', 's':'sierra', 't':'tango', 'u':'union', 'v':'victor', 'w':'whiskey', 'x':'extra', 'y':'yankee', 'z':'zulu'
+}
+
+#1949 ICAO code words
+spelling_alphabet_icao_1949 = {
+'a':'alfa', 'b':'beta', 'c':'coca', 'd':'delta', 'e':'echo', 'f':'foxtrot', 'g':'golf', 'h':'hotel', 'i':'india', 'j':'julietta', 'k':'kilo', 'l':'lima', 'm':'metro', 'n':'nectar', 'o':'oscar', 'p':'papa', 'q':'quebec', 'r':'romeo', 's':'sierra', 't':'tango', 'u':'union', 'v':'victor', 'w':'whiskey', 'x':'x-ray', 'y':'yankee', 'z':'zebra'
+}
+
+#1947 ICAO Latin America/Caribbean
+spelling_alphabet_icao_1947_1 = {
+'a':'ana', 'b':'brazil', 'c':'coco', 'd':'dado', 'e':'elsa', 'f':'fiesta', 'g':'gato', 'h':'hombre', 'i':'india', 'j':'julio', 'k':'kilo', 'l':'luis', 'm':'mama', 'n':'norma', 'o':'opera', 'p':'peru', 'q':'quebec', 'r':'rosa', 's':'sara', 't':'tomas', 'u':'uruguay', 'v':'victor', 'w':'whiskey', 'x':'equis', 'y':'yolanda', 'z':'zeta'
+}
+
+#1947 ICAO alphabet (adopted exactly from ARRL)
+spelling_alphabet_icao_1947_2 = {
+'a':'adam', 'b':'baker', 'c':'charlie', 'd':'david', 'e':'edward', 'f':'freddie', 'g':'george', 'h':'harry', 'i':'ida', 'j':'john', 'k':'king', 'l':'luis', 'm':'mama', 'n':'norma', 'o':'opera', 'p':'peru', 'q':'quebec', 'r':'rosa', 's':'sara', 't':'tomas', 'u':'uruguay', 'v':'victor', 'w':'whiskey', 'x':'equis', 'y':'yolanda', 'z':'zeta'
+}

@@ -502,6 +502,26 @@ def table_subtitution(text, method):
 
     return replace_all(text, t1, t2)
 
+def phonetic_alphabet_e(text, dic):
+    for i, j in dic.items():
+        text = text.replace(i, j.upper())
+    return text
+
+def phonetic_alphabet_d(text, dic):
+    dic_swap = {v: k for k, v in dic.items()}
+    for i, j in dic_swap.items():
+        text = text.replace(i, j.upper())
+    return text
+
+def return_phonetic_alphabet_values(dic):
+    text = 'Code table = ['
+    for i in list_a:
+        text += dic[i] + ' '
+    
+    text = text[:-1] + ']'
+    return text
+
+
 # SECOM cipher
 # http://users.telenet.be/d.rijmenants/en/secom.htm
 # http://kryptografie.de/kryptografie/chiffre/secom.htm

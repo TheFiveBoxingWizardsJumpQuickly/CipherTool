@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import re
 from cipher.fn import *
+from cipher.riddle_tables import show_table
 
 def action_1(request):
     input_text = request.POST.getlist("input_1_txt")[0]
@@ -413,3 +414,56 @@ def action_16(request):
 
     return HttpResponse(output_text)
 
+def action_17(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    option_1 = request.POST.getlist("opt_1")[0]
+
+    output_text = ''
+
+    tables ={
+        '#International Radiotelephony Spelling Alphabet (NATO phonetic alphabet)':spelling_alphabet_icao_2008,
+        '#1951 ICAO code words':spelling_alphabet_icao_1951,
+        '#1949 ICAO code words':spelling_alphabet_icao_1949,
+        '#1947 ICAO Latin America/Caribbean':spelling_alphabet_icao_1947_1,
+        '#1947 ICAO alphabet':spelling_alphabet_icao_1947_2
+    }
+
+    input_text_lower = input_text.lower()
+
+    if option_1 == '0':
+        output_text += '<B>Phonetic Alphabet Encode</B>' + '<br>'
+
+        output_text += '<br>'
+        output_text += 'Input text = <br>'
+        output_text += input_text_lower + '<br>'
+        output_text += '<br>'
+
+        for table_description,table in tables.items():
+            output_text += table_description + '<br>'
+            output_text += return_phonetic_alphabet_values(table) + '<br><br>'
+            output_text += phonetic_alphabet_e(input_text_lower, table) +'<br>'
+            output_text += '<hr>'
+
+    if option_1 == '1':
+        output_text += '<B>Phonetic Alphabet Decode</B>' + '<br>'
+
+        output_text += '<br>'
+        output_text += 'Input text = <br>'
+        output_text += input_text_lower + '<br>'
+        output_text += '<br>'
+        
+        for table_description,table in tables.items():
+            output_text += table_description + '<br>'
+            output_text += return_phonetic_alphabet_values(table) + '<br><br>'
+            output_text += phonetic_alphabet_d(input_text_lower, table) +'<br>'
+            output_text += '<hr>'
+
+    return HttpResponse(output_text)
+
+def action_18(request):
+    option_1 = request.POST.getlist("opt_1")[0]
+
+    output_text = ''
+    output_text = show_table(int(option_1))
+    
+    return HttpResponse(output_text)
