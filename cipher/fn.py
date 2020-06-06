@@ -498,7 +498,25 @@ def table_subtitution(text, method):
         t2 = '`123456789?vxswdfguhjknbio?earycqzt?0-p[]lm,.??VXSWDFGUHJKNBIO?EARYCQZT?'
     elif method == 'US keyboard right shift':
         t1 = '1234567890abcdefghijklmnopqrstuvwxyz-=[]\;,./`ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-        t2 = '234567890-snvfrghjokl;,mp[wtdyibecux=?]\?\'./?1SNVFRGHJOKL;,MP[WTDYIBECUX'
+        t2 = "234567890-snvfrghjokl;,mp[wtdyibecux=?]\?'./?1SNVFRGHJOKL;,MP[WTDYIBECUX"
+    elif method == 'US keyboard right <-> left':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz-=[]\;,./`ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = "0987654321;n,kijhgefdsvbwqpulyrmo.t/`????acxz-;N,KIJHGEFDSVBWQPULYRMO.T/"
+    elif method == 'US keyboard up <-> down':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz-=[]\;,./`ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = "zxcvbnm,..q53edrtykuio76l;afwgj4s2h1?????p890?Q53EDRTYKUIO76L;AFWGJ4S2H1"
+    elif method == 'US keyboard to Dvorak keyboard':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz-=[]\;,./`ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = "1234567890axje.uidchtnmbrl'poygk,qf;[]/=\swvz`AXJE.UIDCHTNMBRL'POYGK,QF;"
+    elif method == 'Dvorak keyboard to US keyboard':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz-=[]\;,./`ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = "1234567890anihdyujgcvpmlsrxo;kf.,bt/']-=\zwe[`ANIHDYUJGCVPMLSRXO;KF.,BT/"
+    elif method == 'US keyboard to MALTRON keyboard':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz-=[]\;,./`ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = "1234567890a,jiysfduthow>zlqcnbmgp>v<?????rk-x?A,JIYSFDUTHOW>ZLQCNBMGP>V<"
+    elif method == 'MALTRON keyboard to US keyboard':
+        t1 = '1234567890abcdefghijklmnopqrstuvwxyz-=[]\;,./`ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        t2 = "1234567890atrh?gvkdc,puslwq;fjiym/eo>?????????ATRH?GVKDC,PUSLWQ;FJIYM/EO"
 
     return replace_all(text, t1, t2)
 

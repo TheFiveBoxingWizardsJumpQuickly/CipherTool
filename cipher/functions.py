@@ -4,6 +4,9 @@ import re
 from cipher.fn import *
 from cipher.riddle_tables import show_table
 
+def action(request, action_number):
+    return eval('action_' + str(action_number) +'(request)' )
+
 def action_1(request):
     input_text = request.POST.getlist("input_1_txt")[0]
     option_1 = request.POST.getlist("opt_1")[0]
@@ -407,7 +410,13 @@ def action_16(request):
             'Morse reverse', 
             'Morse .- swap and reverse', 
             'US keyboard left shift',
-            'US keyboard right shift']
+            'US keyboard right shift',
+            'US keyboard right <-> left',
+            'US keyboard up <-> down',
+            'US keyboard to Dvorak keyboard',
+            'Dvorak keyboard to US keyboard',
+            'US keyboard to MALTRON keyboard',
+            'MALTRON keyboard to US keyboard']
 
     for menu in menus:
         output_text += menu + ': ' + table_subtitution(input_text, menu) + '<br>'

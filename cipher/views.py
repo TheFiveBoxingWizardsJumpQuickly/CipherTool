@@ -85,6 +85,11 @@ option_separater = \
 def index(request):
     return render(request, 'index.html', {})
 
+def link(request):
+    return render(request, 'link.html', {})
+
+def pageView(request, page_number):
+    return eval('page' + str(page_number) +'(request)' )
 
 
 def page1(request):
@@ -95,7 +100,7 @@ def page1(request):
         'clears':[clear_1],
         'data_fields':[data_field_1,data_opt_1],
         'options':[option_numeric_flag],
-        'action_url':'"./action_1"',
+        'action_url':'"/action_1"',
     })
 
 def page2(request):

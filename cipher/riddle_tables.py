@@ -10,6 +10,7 @@ def show_table(id):
     elif id == 2: return show_japanese_zodiac()
     elif id == 3: return show_hiragana()
     elif id == 4: return show_katakana()
+    elif id == 5: return show_keyboard_layout()
 
 
 def show_japan_traditional_month_name():
@@ -96,4 +97,20 @@ def show_katakana():
 
     '''
     return b
+
+def show_keyboard_layout():
+    b = \
+    '''
+    <b><p>US Keyboard Layout</p></b>
+    <img src="media/640px-US_ANSI_keyboard_character_layout_JIS_comparison.svg.png" max-width="100%" height:auto; border="0" />
+    <br>
+    <b><p>Japanese Keyboard Layout</p></b>
+    <img src="media/640px-JIS_keyboard_character_layout_US_ANSI_comparison.svg.png" max-width="100%" height:auto; border="0" />
+    <br>
+    <br>
+    <p>Image from https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:US_ANSI_keyboard_character_layout_JIS_comparison.svg</p>
+    <p>and https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:JIS_keyboard_character_layout_US_ANSI_comparison.svg</p>
+
+    '''
+    return b    
 
