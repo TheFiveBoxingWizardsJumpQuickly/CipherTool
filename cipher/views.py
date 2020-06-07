@@ -82,6 +82,18 @@ option_separater = \
         </div>
 '''
 
+option_rectangle = \
+'''
+        <div class="cp_ipselect cp_sl01">
+            <select required id=opt_1>
+                <option value="" hidden>Choose</option>
+                <option value="0" selected>Divisible number of columns</option>
+                <option value="1">All number of columns</option>
+            </select>
+        </div>
+'''
+
+
 def index(request):
     return render(request, 'index.html', {})
 
@@ -287,3 +299,81 @@ def page18(request):
         'data_fields':[data_opt_1],
         'action_url':'"./action_18"',
     })
+
+def page19(request):
+    return render(request, tool_template, 
+    {
+        'title':'Text Analysis',
+        'fields':[input_1],
+        'clears':[clear_1],
+        'data_fields':[data_field_1],
+        'options':'',
+        'action_url':'"./action_19"',
+    })
+
+def page20(request):
+    return render(request, tool_template, 
+    {
+        'title':'Text to ASCII code, Base64, etc.',
+        'fields':[input_1],
+        'clears':[clear_1],
+        'data_fields':[data_field_1],
+        'options':'',
+        'action_url':'"./action_20"',
+    })
+
+def page21(request):
+    return render(request, tool_template, 
+    {
+        'title':'ASCII code to Text',
+        'fields':[input_1],
+        'clears':[clear_1],
+        'data_fields':[data_field_1],
+        'options':'',
+        'action_url':'"./action_21"',
+    })
+
+def page22(request):
+    return render(request, tool_template, 
+    {
+        'title':'Base64 etc. Coversion',
+        'fields':[input_1],
+        'clears':[clear_1],
+        'data_fields':[data_field_1],
+        'options':'',
+        'action_url':'"./action_22"',
+    })
+
+def page23(request):
+    return render(request, tool_template, 
+    {
+        'title':'Rectangle',
+        'fields':[input_1],
+        'clears':[clear_1],
+        'data_fields':[data_field_1, data_opt_1],
+        'options':[option_rectangle],
+        'action_url':'"./action_23"',
+    })
+
+def page24(request):
+    return render(request, tool_template, 
+    {
+        'title':'Periodic transposition',
+        'fields':[input_1, input_2_key],
+        'clears':[clear_1, clear_2],
+        'data_fields':[data_field_1, data_field_2],
+        'options':'',
+        'action_url':'"./action_24"',
+    })
+
+def page25(request):
+    return render(request, tool_template, 
+    {
+        'title':'Swap X-Y axes',
+        'fields':[input_1],
+        'clears':[clear_1],
+        'data_fields':[data_field_1],
+        'options':'',
+        'action_url':'"./action_25"',
+    })
+

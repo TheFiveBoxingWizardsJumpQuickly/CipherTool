@@ -150,6 +150,67 @@ def rect(text, col):
     result=""
     for i in range(len(text)):
         result+=text[i]
-        if i %col == col-1:
-            result+='\n'
-    print(result)
+        if i %col == col-1 or i ==len(text)-1:
+            result+='<BR>'
+    return result
+
+def periodic_transposition_e(text, key):
+    result =''
+    text_length = len(text)
+    key_length = len(key)
+    for i in range(0, text_length, key_length):
+        r = text[i:i+key_length]
+        for j in range(key_length):
+            if key[j] <= len(r):
+                result += r[key[j]-1]
+    return result
+
+def periodic_transposition_d(text, key):
+    result =''
+    text_length = len(text)
+    key_length = len(key)
+
+    key_reverse = [0]*key_length
+    for i in range(key_length):
+        key_reverse[key[i]-1]=i+1
+
+    for i in range(0, text_length, key_length):
+        r = text[i:i+key_length]
+        if len(r) == key_length:
+            for j in range(key_length):
+                result += r[key_reverse[j]-1]
+        else:
+            key2 = []
+            for k in range(key_length):
+                if key[k] <= len(r):
+                    key2.append(key[k])
+            key_reverse2 = [0]*key_length
+            for i in range(len(r)):
+                key_reverse2[key2[i]-1]=i+1
+            for j in range(len(r)):
+                result += r[key_reverse2[j]-1]
+    return result
+
+def swap_xy_axes(text):
+    a = text.split('\n')
+    max_y = len(a)
+    max_x = 1
+    for r in a:
+        max_x = max(max_x, len(r))
+    
+    a2=[]
+    for r in a:
+        a2.append(r+ ' '*(max_x - len(r)))
+
+    b = []
+
+    for x in range(max_x):
+        c=''
+        for y in range(max_y):
+            c+=a2[y][x]
+        b.append(c)
+
+    return '<BR>'.join(b) 
+
+    
+

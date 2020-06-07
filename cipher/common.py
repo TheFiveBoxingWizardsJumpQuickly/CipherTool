@@ -1,3 +1,5 @@
+import re
+
 def assign_digits(x):
     a=[0]*len(x)
 
@@ -29,13 +31,14 @@ def mixed_alphabet(keyword, combined=False):
             already_appeared.append(s)
     return result
 
-def unique(text):
+def unique(text, sort=False):
     already_appeared=[]
-    result =""
     for s in text:
         if not s in already_appeared:
-            result+=s
             already_appeared.append(s)
+    if sort:
+        already_appeared.sort()
+    result = ''.join(already_appeared)
     return result
 
 def mixed_alphanumeric(keyword):
@@ -64,5 +67,18 @@ def extract_integer_only(text):
     import re
     return re.sub('\\D', '', text)
 
+def characters_validation(text, encoding_method):
+    if encoding_method == 'base16':
+        return re.match(r'^[A-Fa-f0-9]+$', text) is not None
+    elif encoding_method == 'base32':
+        return re.match(r'^[A-Z2-7=]+$', text) is not None
+    elif encoding_method == 'base64':
+        return re.match(r'^[A-Za-z0-9+=]+$', text) is not None
+    elif encoding_method == 'uuencode':
+        return re.match(r'^[`-_]+$', text) is not None
+    elif encoding_method == 'ascii85':
+        return re.match(r'^[0-9a-zA-Z!#$%&()*+-;<=>?@^_`{|}]+$', text) is not None
+    else:
+        return False
 
 

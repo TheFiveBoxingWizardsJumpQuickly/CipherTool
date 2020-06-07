@@ -5,6 +5,7 @@ from .base_conversion import *
 from .math import *
 from .enigma import enigma, plugboard_gen
 from .misc import *
+import base64, binascii
 
 def decode_help():
     txt='''Decode method HELP:
@@ -539,6 +540,24 @@ def return_phonetic_alphabet_values(dic):
     text = text[:-1] + ']'
     return text
 
+def letter_frequency(text,sortkey=0, reverse_flag=False):
+    unique_text = unique(text)
+    freq = []
+    for letter in unique_text:
+        freq.append([letter,text.count(letter)])
+    return sorted(freq, key=lambda x: x[sortkey], reverse = reverse_flag)
+
+def uu_encode(byte):
+    result = ''.encode()
+    for s in range(0, len(byte), 45):
+        result += binascii.b2a_uu(byte[s:s+45])[:-1]
+    return result
+
+def uu_decode(text):
+    result = ''.encode()
+    for s in range(0, len(text), 60):
+        result += binascii.a2b_uu(text[s:s+60])
+    return result
 
 # SECOM cipher
 # http://users.telenet.be/d.rijmenants/en/secom.htm

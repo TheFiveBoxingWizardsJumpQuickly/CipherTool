@@ -77,6 +77,7 @@ def hex_to_bin(c):
 def hexa(c):
     return deca([int(i,16) for i in split_by_len(c,2)])
 
+'''
 def uudecode(a, bin_output=False):
     b="".join([bin(ord(i)-32).replace("0b","").zfill(6) for i in a])
     length =len(b)
@@ -88,6 +89,7 @@ def uudecode(a, bin_output=False):
         return c
     else:
         return "".join(e)
+'''
 
 def Base_10_to_b(n, b):
     if (int(n/b)):

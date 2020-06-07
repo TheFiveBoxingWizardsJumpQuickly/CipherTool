@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import re
+import re, math, html
 from cipher.fn import *
 from cipher.riddle_tables import show_table
 
@@ -472,7 +472,232 @@ def action_17(request):
 def action_18(request):
     option_1 = request.POST.getlist("opt_1")[0]
 
-    output_text = ''
     output_text = show_table(int(option_1))
     
+    return HttpResponse(output_text)
+
+def action_19(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+
+    output_text = ''
+    output_text += '<B>Text Analysis</B>' + '<br>'
+    output_text += 'Text length = ' + str(len(input_text)) + '<br>'
+    output_text += 'Used characters (unique) = ' + unique(input_text, sort=True) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += '<B>Letter frequency (Sorted Alphabetically)</B>' + '<br>'
+    freq = letter_frequency(input_text,0,False)
+    for i in freq:
+        output_text += i[0] + ': ' + str(i[1]) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += '<B>Letter frequency (Sorted by Frequency)</B>' + '<br>'
+    freq = letter_frequency(input_text,1,True)
+    for i in freq:
+        output_text += i[0] + ': ' + str(i[1]) + '<br>'
+    output_text += '' + '<br>'
+
+    return HttpResponse(output_text)
+
+def action_20(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    ascii_list = adec(input_text)
+    ascii_list_str = list(map(str, ascii_list))
+
+    output_text = ''
+
+    output_text += 'ASCII code (Binary)' + '<br>'
+    output_text += ' '.join(base_a_to_base_b(ascii_list_str, 10, 2)) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'ASCII code (Octal)' + '<br>'
+    output_text += ' '.join(base_a_to_base_b(ascii_list_str, 10, 8)) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'ASCII code (Decimal)' + '<br>'
+    output_text += ' '.join(ascii_list_str) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'ASCII code (Hex)' + '<br>'
+    output_text += ' '.join(base_a_to_base_b(ascii_list_str, 10, 16)) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'Base32' + '<br>'
+    output_text += str(base64.b32encode(input_text.encode()))[2:-1] + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'Base64' + '<br>'
+    output_text += str(base64.b64encode(input_text.encode()))[2:-1] + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'UUencode' + '<br>'
+    output_text += html.escape(str(uu_encode(input_text.encode()))[2:-1]) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'ASCII85' + '<br>'
+    output_text += html.escape(str(base64.a85encode(input_text.encode()))[2:-1]) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'BASE85' + '<br>'
+    output_text += html.escape(str(base64.b85encode(input_text.encode()))[2:-1]) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += '' + '<br>'
+
+    return HttpResponse(output_text)
+
+def action_21(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    input_list = input_text.split()
+    
+    output_text = ''
+    output_text += 'Input text was interpreted as: ' + ' '.join(input_list) + '<br>'    
+    output_text += '' + '<br>'
+
+    output_text += 'ASCII code (Binary)' + '<br>'
+    temp_list = base_a_to_base_b(input_list,2,10)
+    output_text += 'Decimal presentation: ' + ' '.join(temp_list) + '<br>'
+    output_text += 'ASCII: ' + deca(temp_list) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'ASCII code (Octal)' + '<br>'
+    temp_list = base_a_to_base_b(input_list,8,10)
+    output_text += 'Decimal presentation: ' + ' '.join(temp_list) + '<br>'
+    output_text += 'ASCII: ' + deca(temp_list) + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'ASCII code (Decimal)' + '<br>'
+    temp_list = base_a_to_base_b(input_list,10,10)
+    output_text += 'Decimal presentation: ' + ' '.join(temp_list) + '<br>'
+    output_text += 'ASCII: ' + deca(input_list) + '<br>'
+    output_text += '' + '<br>'
+    
+    output_text += 'ASCII code (Hex)' + '<br>'
+    temp_list = base_a_to_base_b(input_list,16,10)
+    output_text += 'Decimal presentation: ' + ' '.join(temp_list) + '<br>'
+    output_text += 'ASCII: ' + deca(temp_list) + '<br>'
+    output_text += '' + '<br>'
+
+    return HttpResponse(output_text)
+
+def action_22(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    output_text = ''
+
+    def output_template(byte):
+        output_text = ''
+        output_text += 'to base16: ' + str(base64.b16encode(byte))[2:-1] + '<br>'
+        output_text += 'to base32: ' + str(base64.b32encode(byte))[2:-1] + '<br>' 
+        output_text += 'to base64: ' + str(base64.b64encode(byte))[2:-1] + '<br>' 
+        output_text += 'to uuencode: ' + html.escape(str(uu_encode(byte))[2:-1]) + '<br>' 
+        output_text += 'to ascii85: ' + html.escape(str(base64.a85encode(byte))[2:-1]) + '<br>' 
+        output_text += 'to base85: ' + html.escape(str(base64.b85encode(byte))[2:-1]) + '<br>' 
+        output_text += 'to text: ' + html.escape(str(byte)[2:-1]) + '<br>'
+        output_text += '<br>'
+        return output_text
+    
+
+    input_text_formatted = input_text.upper()[:len(input_text)-(len(input_text) %2)]
+    output_text += '<B>Base16 decode</B>'+'<br>'
+    output_text += 'input: ' + input_text_formatted + '<br>'
+    try:
+        temp_byte = base64.b16decode(input_text_formatted)
+        output_text += output_template(temp_byte)
+    except:
+        output_text += '# text was not interpreted as Base16 encoding. <br><br>' 
+    
+    input_text_formatted = input_text.upper()
+    input_text_formatted = input_text_formatted + "="*(-len(input_text_formatted) %8)
+    output_text += '<B>Base32 decode</B>'+'<br>'
+    output_text += 'input: ' + input_text_formatted + '<br>'
+    try:
+        temp_byte = base64.b32decode(input_text_formatted)
+        output_text += output_template(temp_byte)
+    except:
+        output_text += '# text was not interpreted as Base32 encoding. <br><br>' 
+
+    input_text_formatted = input_text + "="*(-len(input_text) %4)
+    output_text += '<B>Base64 decode</B>'+'<br>'
+    output_text += 'input: ' + input_text_formatted + '<br>'
+    try:
+        temp_byte = base64.b64decode(input_text_formatted, validate=True)
+        output_text += output_template(temp_byte)
+    except:
+        output_text += '# text was not interpreted as Base64 encoding. <br><br>' 
+
+    input_text_formatted = input_text + " "*(-len(input_text) %4)
+    output_text += '<B>UU decode</B>'+'<br>'
+    output_text += 'input: ' + input_text_formatted + '<br>'
+    try:
+        temp_byte = uu_decode(input_text_formatted)
+        output_text += output_template(temp_byte)
+    except:
+        output_text += '# text was not interpreted as UU encoding. <br><br>' 
+
+    input_text_formatted = input_text
+    output_text += '<B>ASCII85 decode</B>'+'<br>'
+    output_text += 'input: ' + input_text_formatted + '<br>'
+    try:
+        temp_byte = base64.a85decode(input_text_formatted)
+        output_text += output_template(temp_byte)
+    except:
+        output_text += '# text was not interpreted as ASCII85 encoding. <br><br>' 
+
+    input_text_formatted = input_text
+    output_text += '<B>Base85 decode</B>'+'<br>'
+    output_text += 'input: ' + input_text_formatted + '<br>'
+    try:
+        temp_byte = base64.b85decode(input_text_formatted)
+        output_text += output_template(temp_byte)
+    except:
+        output_text += '# text was not interpreted as Base85 encoding. <br><br>' 
+
+    return HttpResponse(output_text)
+
+
+def action_23(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    option_1 = request.POST.getlist("opt_1")[0]
+    
+    output_text = ''
+    output_text += 'Text length = '+ str(len(input_text)) + '<br>'
+    output_text += '' + '<br>'
+
+    for i in range(2, math.ceil(len(input_text)/2)+1):
+        if len(input_text) %i == 0 or option_1 == '1':
+            output_text += '<B>Column count = '+ str(i) + '</B><br>'
+            output_text += rect(input_text, i) + '<br>'
+
+    output_text += '' + '<br>'
+
+    return HttpResponse(output_text)
+
+def action_24(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    key_before_trunc = request.POST.getlist("input_2_txt")[0]  
+    key = re.sub(r"[^a-zA-Z0-9_]", "", key_before_trunc)
+    key = key.upper()
+    key_assigned = assign_digits(key)
+    
+    output_text = ''
+    output_text += 'Text length = '+ str(len(input_text)) + '<br>'
+    output_text += 'Key strings = ' + key + '<br>'
+    output_text += 'Key strings is interpretted as ' + str(key_assigned) + '<br>'
+    output_text += '' + '<br>'
+    output_text += 'Periodic Transposition Encode: ' + periodic_transposition_e(input_text, key_assigned) + '<br>'
+    output_text += 'Periodic Transposition Decode: ' + periodic_transposition_d(input_text, key_assigned) + '<br>'
+
+    output_text += '' + '<br>'
+
+    return HttpResponse(output_text)
+
+def action_25(request):
+    input_text = request.POST.getlist("input_1_txt")[0]    
+    output_text = ''
+    output_text += '<br>'
+
+    output_text += swap_xy_axes(input_text) + '<br>'
+
+    output_text += '' + '<br>'
+
     return HttpResponse(output_text)
