@@ -387,3 +387,26 @@ def page26(request):
         'options':'',
         'action_url':'"./action_26"',
     })
+
+def page27(request):
+    return render(request, tool_template, 
+    {
+        'title':'Python code (eval)',
+        'fields':[input_1],
+        'clears':[],
+        'data_fields':[data_field_1],
+        'options':'',
+        'action_url':'"./action_27"',
+    })
+
+def page28(request):
+    return render(request, tool_template, 
+    {
+        'title':'Python code (exec)',
+        'fields':[input_1],
+        'clears':[],
+        'data_fields':[data_field_1],
+        'options':'',
+        'action_url':'"./action_28"',
+    })
+

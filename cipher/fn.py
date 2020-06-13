@@ -36,7 +36,7 @@ def decode_help():
         text_split(text, step, sep = ' ')
         table_subtitution(text, method) the method should be the right name. See the code for avaliable names.
         '''
-    print(txt)
+    return(txt)
 
 def adfgx_e(text, table_keyword, transposition_keyword):
     table = mixed_alphabet(table_keyword, True)

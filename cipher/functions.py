@@ -776,6 +776,47 @@ def action_26(request):
     output_text += '<a href="https://norvig.com/mayzner.html">https://norvig.com/mayzner.html</a>' + '<br>'
     output_text += '' + '<br>'
 
+    return HttpResponse(output_text)
 
+def action_27(request):
+    input_text = request.POST.getlist("input_1_txt")[0]    
+    output_text = ''
+    output_text += '<br>'
+    output_text += html.escape(input_text).replace('\n','<BR>') +  '<br>'
+    output_text += '<br>'
+
+
+    try:
+        result = eval(input_text)
+        if type(result) != "<type 'str'>":
+            result = str(result)
+        output_text += html.escape(result) + '<br>'
+    except Exception as e:
+        output_text += '# Python could not evaluate the expression. ' + '<br>'
+        output_text += html.escape(str(e)) + '<br>'
+
+    return HttpResponse(output_text)
+
+def action_28(request):
+    input_text = request.POST.getlist("input_1_txt")[0]    
+    output_text = ''
+    output_text += '<br>'
+    output_text += html.escape(input_text).replace('\n','<BR>') +  '<br>'
+    output_text += '<br>'
+
+    ldict = {'val':''}
+
+    try:
+        exec(input_text,globals(),ldict)
+        val = ldict['val']
+        if type(val) != "<type 'str'>":
+            val = str(val)
+        if val =='':
+            output_text += "# Please overwrite the variable 'val'." + '<br>'
+        else:
+            output_text += html.escape(val) + '<br>'
+    except Exception as e:
+        output_text += '# Python could not excute the expression. ' + '<br>'
+        output_text += html.escape(str(e)) + '<br>'
 
     return HttpResponse(output_text)
