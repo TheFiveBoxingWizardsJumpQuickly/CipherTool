@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import re, math, html
 from cipher.fn import *
 from cipher.riddle_tables import show_table
+from cipher.python_playground import myeval, myexec
 
 def action(request, action_number):
     return eval('action_' + str(action_number) +'(request)' )
@@ -785,15 +786,22 @@ def action_27(request):
     output_text += html.escape(input_text).replace('\n','<BR>') +  '<br>'
     output_text += '<br>'
 
+    if 'import ' in input_text:
+        output_text += "Could not contain the strings 'import' by the security reason."
+        return HttpResponse(output_text)
 
     try:
-        result = eval(input_text)
+        result = myeval(input_text)
         if type(result) != "<type 'str'>":
             result = str(result)
         output_text += html.escape(result) + '<br>'
     except Exception as e:
         output_text += '# Python could not evaluate the expression. ' + '<br>'
         output_text += html.escape(str(e)) + '<br>'
+
+    output_text += '<br>'
+    output_text += '<br>'
+    output_text += "Modules 'math', 'sympy', and 're' are available." + '<br>'
 
     return HttpResponse(output_text)
 
@@ -804,10 +812,14 @@ def action_28(request):
     output_text += html.escape(input_text).replace('\n','<BR>') +  '<br>'
     output_text += '<br>'
 
+    if 'import ' in input_text:
+        output_text += "Could not contain the strings 'import' by the security reason."
+        return HttpResponse(output_text)
+
     ldict = {'val':''}
 
     try:
-        exec(input_text,globals(),ldict)
+        myexec(input_text,globals(),ldict)
         val = ldict['val']
         if type(val) != "<type 'str'>":
             val = str(val)
@@ -818,5 +830,9 @@ def action_28(request):
     except Exception as e:
         output_text += '# Python could not excute the expression. ' + '<br>'
         output_text += html.escape(str(e)) + '<br>'
+
+    output_text += '<br>'
+    output_text += '<br>'
+    output_text += "Modules 'math', 'sympy', and 're' are available." + '<br>'
 
     return HttpResponse(output_text)
