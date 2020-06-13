@@ -547,6 +547,18 @@ def letter_frequency(text,sortkey=0, reverse_flag=False):
         freq.append([letter,text.count(letter)])
     return sorted(freq, key=lambda x: x[sortkey], reverse = reverse_flag)
 
+def bigram_frequency(text):
+    freq = []
+    bigram =[]
+    for i in range(len(text)-1):
+        if not ' ' in text[i:i+2]:
+            bigram.append(text[i:i+2])
+
+    unique_bigram = unique_list(bigram)
+    for b in unique_bigram:
+        freq.append([b,bigram.count(b)])
+    return sorted(freq, key=lambda x: x[1], reverse = True)
+
 def uu_encode(byte):
     result = ''.encode()
     for s in range(0, len(byte), 45):

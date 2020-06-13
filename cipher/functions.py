@@ -701,3 +701,81 @@ def action_25(request):
     output_text += '' + '<br>'
 
     return HttpResponse(output_text)
+
+def action_26(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    input_from = request.POST.getlist("input_2_txt")[0]
+    input_to = request.POST.getlist("input_3_txt")[0]
+
+    text_from = unique(input_from)
+    text_to = input_to
+    
+    text_length = min(len(text_from), len(text_to))
+    text_del = text_from[text_length:]
+    text_from = text_from[:text_length]
+    text_to = text_to[:text_length]
+    map_dict = dict(zip(text_from, text_to))
+
+    input_text_working = input_text
+    for i in text_del:
+        input_text_working = input_text_working.replace(i, '')
+
+    output_text = ''
+    output_text += '<B>Characters replace</B>'
+    output_text += '<br>'
+    output_text +=  'Replace characters <br>'
+    output_text += '_del: ' + text_del.upper() + "<br>"
+    output_text += 'from: ' + text_from.upper() + "<br>"
+    output_text += '__to: ' + text_to.upper() + '<br>'
+    output_text += '<br>'
+    output_text += '[Before]<br>'
+    output_text += input_text + '<br>'
+    output_text += '<br>'
+    output_text += '[After]<br>'
+    output_text += replace_all_case_insensitive(input_text_working, text_from, text_to)
+    output_text += '<br>'
+    output_text += '<br>'
+
+
+    #frequency info
+    output_text += '<B>Letter frequency</B>' + '<br>'
+    analysys_text = re.sub(r"[^A-Z]", "", input_text.upper())
+
+    total_letter_count = len(analysys_text)
+
+    freq = letter_frequency(analysys_text,1,True)
+    for i in range(len(freq)):
+        output_text += freq[i][0] + ': ' + '{percent:.2%}'.format(percent=freq[i][1]/total_letter_count) +   ', '
+        if i%9==8:
+            output_text += '<br>'
+    output_text += '' + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += '<B>Bigram frequency</B>' + '<br>'
+    analysys_text = re.sub(r"[^A-Z] ", "", input_text.upper())
+    total_bigram_count = len(analysys_text) -1
+    freq = bigram_frequency(analysys_text)
+    for i in range(min(len(freq),18)):
+        output_text += freq[i][0] + ': ' + '{percent:.2%}'.format(percent=freq[i][1]/total_bigram_count) +   ', '
+        if i%9==8:
+            output_text += '<br>'
+    output_text += '' + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += '<B>Basic English info.</B>' + '<br>'
+    output_text += 'Letter frequency' + '<br>'
+    output_text += 'E 12.49%, T 9.28%, A 8.04%, O 7.64%, I 7.57%, N 7.23%, S 6.51%, R 6.28%, H 5.05%' + '<br>'
+    output_text += 'L 4.07%, D 3.82%, C 3.34%, U 2.73%, M 2.51%, F 2.40%, P 2.14%, G 1.87%, W 1.68%' + '<br>'
+    output_text += 'Y 1.66%, B 1.48%, V 1.05%, K 0.54%, X 0.23%, J 0.16%, Q 0.12%, Z 0.09%' + '<br>'
+    output_text += '' + '<br>'
+    output_text += 'Bigram frequency' + '<br>'
+    output_text += 'TH 3.56%, HE 3.07%, IN 2.43%, ER 2.05%, AN 1.99%, RE 1.85%, ON 1.76%, AT 1.49%, EN 1.45%' + '<br>'
+    output_text += 'ND 1.35%, TI 1.34%, ES 1.34%, OR 1.28%, TE 1.20%, OF 1.17%, ED 1.17%, IS 1.13%, IT 1.12%' + '<br>'
+    output_text += '' + '<br>'
+    output_text += '* This is based on below site\'s great work. ' + '<br>'
+    output_text += '<a href="https://norvig.com/mayzner.html">https://norvig.com/mayzner.html</a>' + '<br>'
+    output_text += '' + '<br>'
+
+
+
+    return HttpResponse(output_text)

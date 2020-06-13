@@ -377,3 +377,13 @@ def page25(request):
         'action_url':'"./action_25"',
     })
 
+def page26(request):
+    return render(request, tool_template, 
+    {
+        'title':'Homophonic Cipher hand solve helper',
+        'fields':[input_1, input_2_from, input_3_to],
+        'clears':[clear_1, clear_2, clear_3],
+        'data_fields':[data_field_1, data_field_2, data_field_3],
+        'options':'',
+        'action_url':'"./action_26"',
+    })

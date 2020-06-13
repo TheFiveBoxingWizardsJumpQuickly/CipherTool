@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{% static 'style.css' %}">
     </head>
     <body>
-        <div class="menu_bar"><a href='./'>HOME</a> <a href='' onclick="clearContents()">CLEAR</a></div>
+        <div class="menu_bar"><a href='./' class="menu_link_text">HOME</a> <a href='' class="menu_link_text" onclick="clearContents()">CLEAR</a></div>
         <H1>{{ title }}</H1>
 
         {% csrf_token %}

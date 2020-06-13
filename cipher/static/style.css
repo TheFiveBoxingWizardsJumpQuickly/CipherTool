@@ -47,10 +47,10 @@ h1 {
     color: white;
 }
 
-a:link { color: white; }
-a:visited { color: white; }
-a:hover { color: white; }
-a:active { color: white; }
+.menu_link_text:link { color: white; }
+.menu_link_text:visited { color: white; }
+.menu_link_text:hover { color: white; }
+.menu_link_text:active { color: white; }
 
 .myButton {
 	box-shadow:inset 0px 0px 15px 3px #23395e;

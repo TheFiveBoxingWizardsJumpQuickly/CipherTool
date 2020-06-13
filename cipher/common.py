@@ -41,6 +41,16 @@ def unique(text, sort=False):
     result = ''.join(already_appeared)
     return result
 
+def unique_list(list, sort=False):
+    already_appeared=[]
+    for s in list:
+        if not s in already_appeared:
+            already_appeared.append(s)
+    if sort:
+        already_appeared.sort()
+    
+    return already_appeared
+
 def mixed_alphanumeric(keyword):
     kw_alphabet_added = keyword.upper() + "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     return unique(kw_alphabet_added)
@@ -56,6 +66,22 @@ def replace_all(text, table_from, table_to):
     for s in text:
         if s in table_from:
             result += table_to[table_from.find(s)]
+        else:
+            result += s
+    return result
+
+def replace_all_case_insensitive(text, table_from, table_to):
+    result =''
+    table_from_lower = table_from.lower()
+    table_from_upper = table_from.upper()
+    table_to_lower = table_to.lower()
+    table_to_upper = table_to.upper()
+
+    for s in text:
+        if s in table_from_lower:
+            result += table_to_lower[table_from_lower.find(s)]
+        elif s in table_from_upper:
+            result += table_to_upper[table_from_upper.find(s)]
         else:
             result += s
     return result
