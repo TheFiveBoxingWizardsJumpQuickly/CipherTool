@@ -83,7 +83,7 @@ def action_3(request):
 def action_4(request):
     input_text = request.POST.getlist("input_1_txt")[0]
     key_before_trunc = request.POST.getlist("input_2_txt")[0]  
-    key = re.sub(r"[^a-zA-Z0-9_]", "", key_before_trunc)
+    key = re.sub(r"[^a-zA-Z0-9]", "", key_before_trunc)
     option_1 = request.POST.getlist("opt_1")[0]
     if option_1 == '1':
         nc = True
@@ -94,15 +94,15 @@ def action_4(request):
     output_text += '<B>Vigenere</B>'
     output_text += '<br>'
     output_text += 'Used key: ' + key
-    output_text += '<br>'
+    output_text += '<br><br>'
     output_text += 'Decoded: ' + vig_d(input_text, key, nc)
-    output_text += '<br>'
+    output_text += '<br><br>'
     output_text += 'Encoded: ' + vig_e(input_text, key, nc)
-    output_text += '<br>'
+    output_text += '<br><br>'
     output_text += 'Beaufort: ' + beaufort(input_text, key, nc)
-    output_text += '<br>'
+    output_text += '<br><br>'
     output_text += 'Auto key decoded: ' + vig_d_auto(input_text, key, nc)
-    output_text += '<br>'
+    output_text += '<br><br>'
     output_text += 'Auto key encoded: ' + vig_e_auto(input_text, key, nc)
     return HttpResponse(output_text)
 
@@ -149,10 +149,10 @@ def action_7(request):
     opt_6 = request.POST.getlist("opt_6")[0]
     opt_7 = request.POST.getlist("opt_7")[0]
 
-    text= re.sub(r"[^a-zA-Z_]", "", input_text).upper()
+    text= re.sub(r"[^a-zA-Z]", "", input_text).upper()
 
-    roter_key = re.sub(r"[^a-zA-Z_]", "", opt_5).upper().ljust(3, 'A')
-    ringsetting_key = re.sub(r"[^a-zA-Z_]", "", opt_6).upper().ljust(3, 'A')
+    roter_key = re.sub(r"[^a-zA-Z]", "", opt_5).upper().ljust(3, 'A')
+    ringsetting_key = re.sub(r"[^a-zA-Z]", "", opt_6).upper().ljust(3, 'A')
     plugboard= plugboard_gen(opt_7)
 
     output_text = ''
@@ -175,7 +175,7 @@ def action_7(request):
 def action_8(request):
     
     def force_int(txt):
-        txt_trunc = re.sub(r"[^0-9_]", "", txt)
+        txt_trunc = re.sub(r"[^0-9]", "", txt)
 
         if txt_trunc == '':
             return 0
@@ -345,7 +345,7 @@ def action_14(request):
         base = int(base_text)
 
     input_text = input_text.replace(' ',',')
-    input_text = re.sub(r"[^a-zA-Z0-9,_]", "", input_text).upper()
+    input_text = re.sub(r"[^a-zA-Z0-9,]", "", input_text).upper()
     nlist = input_text.split(',')
     output_text = ''
     output_text += '<B>Number conversion</B>'
@@ -676,7 +676,7 @@ def action_23(request):
 def action_24(request):
     input_text = request.POST.getlist("input_1_txt")[0]
     key_before_trunc = request.POST.getlist("input_2_txt")[0]  
-    key = re.sub(r"[^a-zA-Z0-9_]", "", key_before_trunc)
+    key = re.sub(r"[^a-zA-Z0-9]", "", key_before_trunc)
     key = key.upper()
     key_assigned = assign_digits(key)
     
@@ -753,7 +753,7 @@ def action_26(request):
     output_text += '' + '<br>'
 
     output_text += '<B>Bigram frequency</B>' + '<br>'
-    analysys_text = re.sub(r"[^A-Z] ", "", input_text.upper())
+    analysys_text = re.sub(r"[^A-Z ]", "", input_text.upper())
     total_bigram_count = len(analysys_text) -1
     freq = bigram_frequency(analysys_text)
     for i in range(min(len(freq),18)):
@@ -789,6 +789,12 @@ def action_27(request):
     if 'import ' in input_text:
         output_text += "Could not contain the strings 'import' by the security reason."
         return HttpResponse(output_text)
+    elif 'eval(' in input_text:
+        output_text += "Could not contain the strings 'eval' by the security reason."
+        return HttpResponse(output_text)
+    elif 'exec(' in input_text:
+        output_text += "Could not contain the strings 'exec' by the security reason."
+        return HttpResponse(output_text)
 
     try:
         result = myeval(input_text)
@@ -815,6 +821,12 @@ def action_28(request):
     if 'import ' in input_text:
         output_text += "Could not contain the strings 'import' by the security reason."
         return HttpResponse(output_text)
+    elif 'eval(' in input_text:
+        output_text += "Could not contain the strings 'eval' by the security reason."
+        return HttpResponse(output_text)
+    elif 'exec(' in input_text:
+        output_text += "Could not contain the strings 'exec' by the security reason."
+        return HttpResponse(output_text)
 
     ldict = {'val':''}
 
@@ -834,5 +846,52 @@ def action_28(request):
     output_text += '<br>'
     output_text += '<br>'
     output_text += "Modules 'math', 'sympy', and 're' are available." + '<br>'
+
+    return HttpResponse(output_text)
+
+def action_29(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    input_text2 = request.POST.getlist("input_2_txt")[0]
+    ngram = input_text2.upper()
+
+    output_text = ''
+    output_text += '<B>Vigenere break helper (key length)</B>'
+    output_text += '<br>'
+    output_text += 'Analysis Text<br>'
+    analysys_text = re.sub(r"[^A-Z ]", "", input_text.upper())
+    analysys_text_wo_space = re.sub(r"[^A-Z]", "", input_text.upper())
+    output_text += analysys_text + '<br><br>'
+    output_text += 'Text length: ' + str(len(analysys_text)) + ', wo space: '+ str(len(analysys_text_wo_space)) + '<br><br>'
+
+    #frequency info
+    output_text += '<B>Bigram appearance count</B>' + '<br>'
+    total_bigram_count = len(analysys_text) -1
+    freq = bigram_frequency(analysys_text)
+    for i in range(min(len(freq),18)):
+        output_text += freq[i][0] + ': ' + str(freq[i][1]) +   ', '
+        if i%9==8:
+            output_text += '<br>'
+    output_text += '' + '<br>'
+
+    output_text += '<B>Trigram appearance count</B>' + '<br>'
+    total_trigram_count = len(analysys_text) -1
+    freq = trigram_frequency(analysys_text)
+    for i in range(min(len(freq),18)):
+        output_text += freq[i][0] + ': ' + str(freq[i][1]) +   ', '
+        if i%9==8:
+            output_text += '<br>'
+    output_text += '' + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += '<B>n-gram distance</B>' + '<br>'
+    output_text += 'distance: count' + '<br>'
+    freq = ngram_distance(analysys_text, ngram)
+    for i in range(min(len(freq),20)):
+        output_text += str(freq[i][0]) + ': ' + str(freq[i][1]) +   '<br>'
+
+    output_text += '' + '<br>'
+    output_text += '' + '<br>'
+    output_text += '' + '<br>'
+    output_text += '' + '<br>'
 
     return HttpResponse(output_text)

@@ -559,6 +559,42 @@ def bigram_frequency(text):
         freq.append([b,bigram.count(b)])
     return sorted(freq, key=lambda x: x[1], reverse = True)
 
+def trigram_frequency(text):
+    freq = []
+    trigram =[]
+    for i in range(len(text)-1):
+        if not ' ' in text[i:i+3]:
+            trigram.append(text[i:i+3])
+
+    unique_trigram = unique_list(trigram)
+    for b in unique_trigram:
+        freq.append([b,trigram.count(b)])
+    return sorted(freq, key=lambda x: x[1], reverse = True)
+
+def ngram_distance(text, ngram):
+    import re
+    if text =='' or ngram == '':
+        return []
+    ngram_length = len(ngram)
+    iter = re.finditer(ngram, text)
+    start_point_list =[]
+    for i in iter:
+        start_point_list.append(i.span()[0])
+    if len(start_point_list) == 0:
+        return []
+
+    distance=[]
+    for i in range(len(start_point_list)-1):
+        distance.append(len(text[start_point_list[i]:start_point_list[i+1]].replace(' ','')))
+    
+    unique_distance = unique_list(distance)
+    freq = []
+    for d in unique_distance:
+        freq.append([d,distance.count(d)])
+    return sorted(freq, key=lambda x: x[1], reverse = True)
+
+
+
 def uu_encode(byte):
     result = ''.encode()
     for s in range(0, len(byte), 45):

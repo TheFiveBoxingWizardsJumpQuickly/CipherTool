@@ -410,3 +410,13 @@ def page28(request):
         'action_url':'"./action_28"',
     })
 
+def page29(request):
+    return render(request, tool_template, 
+    {
+        'title':'Vigenere break helper (key length)',
+        'fields':[input_1, "<p>n-gram strings<p>" + input_2],
+        'clears':[],
+        'data_fields':[data_field_1, data_field_2],
+        'options':'',
+        'action_url':'"./action_29"',
+    })
