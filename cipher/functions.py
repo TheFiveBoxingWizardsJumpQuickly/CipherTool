@@ -895,3 +895,26 @@ def action_29(request):
     output_text += '' + '<br>'
 
     return HttpResponse(output_text)
+
+def action_30(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+
+    output_text = ''
+    output_text += '<B>Hash</B>' + '<br>'
+    output_text += '' + '<br>'
+    
+    output_text += 'Text___: ' + input_text + '<br>'
+    output_text += '' + '<br>'
+
+    output_text += 'MD5____: ' + hashlib.md5(input_text.encode()).hexdigest() + '<br>'
+    output_text += 'SHA1___: ' + hashlib.sha1(input_text.encode()).hexdigest() + '<br>'
+    output_text += 'SHA224_: ' + hashlib.sha224(input_text.encode()).hexdigest() + '<br>'
+    output_text += 'SHA256_: ' + hashlib.sha256(input_text.encode()).hexdigest() + '<br>'
+    output_text += 'SHA384_: ' + hashlib.sha384(input_text.encode()).hexdigest() + '<br>'
+    output_text += 'SHA512_: ' + hashlib.sha512(input_text.encode()).hexdigest() + '<br>'
+    output_text += 'BLAKE2b: ' + hashlib.blake2b(input_text.encode()).hexdigest() + '<br>'
+    output_text += 'BLAKE2s: ' + hashlib.blake2s(input_text.encode()).hexdigest() + '<br>'
+    output_text += '' + '<br>'
+
+
+    return HttpResponse(output_text)

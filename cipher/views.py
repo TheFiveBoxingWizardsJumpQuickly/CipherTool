@@ -393,7 +393,7 @@ def page27(request):
     {
         'title':'Python code (eval)',
         'fields':[input_1],
-        'clears':[],
+        'clears':[clear_1],
         'data_fields':[data_field_1],
         'options':'',
         'action_url':'"./action_27"',
@@ -404,7 +404,7 @@ def page28(request):
     {
         'title':'Python code (exec)',
         'fields':[input_1],
-        'clears':[],
+        'clears':[clear_1],
         'data_fields':[data_field_1],
         'options':'',
         'action_url':'"./action_28"',
@@ -415,8 +415,19 @@ def page29(request):
     {
         'title':'Vigenere break helper (key length)',
         'fields':[input_1, "<p>n-gram strings<p>" + input_2],
-        'clears':[],
+        'clears':[clear_1, clear_2],
         'data_fields':[data_field_1, data_field_2],
         'options':'',
         'action_url':'"./action_29"',
+    })
+
+def page30(request):
+    return render(request, tool_template, 
+    {
+        'title':'Hash',
+        'fields':[input_1],
+        'clears':[clear_1],
+        'data_fields':[data_field_1],
+        'options':'',
+        'action_url':'"./action_30"',
     })

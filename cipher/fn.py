@@ -5,7 +5,7 @@ from .base_conversion import *
 from .math import *
 from .enigma import enigma, plugboard_gen
 from .misc import *
-import base64, binascii
+import base64, binascii, hashlib
 
 def decode_help():
     txt='''Decode method HELP:
