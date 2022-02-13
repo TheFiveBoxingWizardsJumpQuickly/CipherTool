@@ -254,6 +254,14 @@ def action_10(request):
     output_text += '<B>Morse Decode</B>'
     output_text += '<br>'
     output_text +=  morse_d(input_text)
+    output_text += '<br>'
+    output_text += '<B>Wabun Morse Encode</B>'
+    output_text += '<br>'
+    output_text +=  morse_wabun_e(input_text)
+    output_text += '<br>'
+    output_text += '<B>Wabun Morse Decode</B>'
+    output_text += '<br>'
+    output_text +=  morse_wabun_d(input_text)
 
     return HttpResponse(output_text)
 
@@ -916,5 +924,15 @@ def action_30(request):
     output_text += 'BLAKE2s: ' + hashlib.blake2s(input_text.encode()).hexdigest() + '<br>'
     output_text += '' + '<br>'
 
+
+    return HttpResponse(output_text)
+
+def action_31(request):
+    input_text = request.POST.getlist("input_1_txt")[0]
+    option_1 = request.POST.getlist("opt_1")[0]
+
+    output_text = ''
+    output_text += 'Chemical Symbol <BR>'
+    output_text += 'Under developping'
 
     return HttpResponse(output_text)

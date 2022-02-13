@@ -93,6 +93,17 @@ option_rectangle = \
         </div>
 '''
 
+option_chemicalsymbol = \
+'''
+        <div class="cp_ipselect cp_sl01">
+            <select required id=opt_1>
+                <option value="" hidden>Choose</option>
+                <option value="0" selected>Atomic number to sympol</option>
+                <option value="1">Symbol to atomic number</option>
+            </select>
+        </div>
+'''
+
 
 def index(request):
     return render(request, 'index.html', {})
@@ -429,5 +440,16 @@ def page30(request):
         'clears':[clear_1],
         'data_fields':[data_field_1],
         'options':'',
+        'action_url':'"./action_30"',
+    })
+
+def page31(request):
+    return render(request, tool_template, 
+    {
+        'title':'Chemical Symbol (Periodic Table)',
+        'fields':[input_1],
+        'clears':[clear_1, clear_2],
+        'data_fields':[data_field_1],
+        'options':[option_chemicalsymbol],
         'action_url':'"./action_30"',
     })
