@@ -839,18 +839,18 @@ def secom_d(c, key):
 
 # end of definition. Below are used for test.
 if __name__ == '__main__':
-    12
-#    print("")
-#    print(adfgvx_e("attack at 1200 AM", "na1c3h8tb2ome5wrpd4f6g7i9j0klqsuvxyz", "privacy"))
-#    print(adfgvx_d("DGDDDAGDDGAFADDFDADVDVFAADVX", "na1c3h8tb2ome5wrpd4f6g7i9j0klqsuvxyz", "privacy"))
-#    decode_help()
-#     print(bacon1_e("morse code", True))
-#    print(bacon1_d("01011 01101 10000 10001 00100 / 00010 01101 00011 00100 ", True))
-#     print(morse_d("00 000 101 111 1 / 0101 000 011 1 ",True))
-#    print(affine_e("Affine cipher 0123",5,8))
-#    print(beaufort("teststrings","beaufort"))
-#    print(bifid_d("UAEOLWRINS", "bgwkzqpndsioaxefclumthyvr"))
-#    print(polybius_d("52211533243324331543444423432444235214"))
-#    print(polybius_e("WFENININESTTHSITHWD"))
-#    print(kw(".*nest.*"))
-#    print(hexbash("01359ab"))
+    #    print("")
+    #    print(adfgvx_e("attack at 1200 AM", "na1c3h8tb2ome5wrpd4f6g7i9j0klqsuvxyz", "privacy"))
+    #    print(adfgvx_d("DGDDDAGDDGAFADDFDADVDVFAADVX", "na1c3h8tb2ome5wrpd4f6g7i9j0klqsuvxyz", "privacy"))
+    #    decode_help()
+    #     print(bacon1_e("morse code", True))
+    #    print(bacon1_d("01011 01101 10000 10001 00100 / 00010 01101 00011 00100 ", True))
+    #     print(morse_d("00 000 101 111 1 / 0101 000 011 1 ",True))
+    #    print(affine_e("Affine cipher 0123",5,8))
+    #    print(beaufort("teststrings","beaufort"))
+    #    print(bifid_d("UAEOLWRINS", "bgwkzqpndsioaxefclumthyvr"))
+    #    print(polybius_d("52211533243324331543444423432444235214"))
+    #    print(polybius_e("WFENININESTTHSITHWD"))
+    #    print(kw(".*nest.*"))
+    #    print(hexbash("01359ab"))
+    pass
