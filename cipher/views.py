@@ -483,4 +483,5 @@ def page31(request):
                       'clears': [clear_1, clear_2],
                       'data_fields': [data_field_1],
                       'options': [option_chemicalsymbol],
+                      'action_url': '"./action_31"',
                   })
