@@ -464,10 +464,10 @@ def bacon2_d(text, bin_code=False, delimiter=" "):
 
 
 def chemical_symbol_convert(text, mode, delimiter=" "):
-    if mode == 0:
+    if mode == '0':
         # Atomic number to sympol
         return code_table_e(text, chemical_symbol, {}, False, delimiter)
-    elif mode == 1:
+    elif mode == '1':
         # Symbol to atomic number
         return code_table_d(text, chemical_symbol, {}, False, delimiter)
 
