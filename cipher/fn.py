@@ -470,6 +470,8 @@ def chemical_symbol_convert(text, mode, delimiter=" "):
     elif mode == '1':
         # Symbol to atomic number
         return code_table_d(text, chemical_symbol, {}, False, delimiter)
+    else:
+        return mode
 
 
 def abc012(text, delimiter=" "):
