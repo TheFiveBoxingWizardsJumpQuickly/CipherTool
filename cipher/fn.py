@@ -463,6 +463,15 @@ def bacon2_d(text, bin_code=False, delimiter=" "):
     return code_table_d(text, bacon1_table, {"a": "0", "b": "1"}, bin_code, delimiter)
 
 
+def chemical_symbol(text, mode, delimiter=" "):
+    if mode == 0:
+        # Atomic number to sympol
+        return code_table_e(text, chemical_symbol, {}, False, delimiter)
+    elif mode == 1:
+        # Symbol to atomic number
+        return code_table_d(text, chemical_symbol, {}, False, delimiter)
+
+
 def abc012(text, delimiter=" "):
     text = text.upper()
     return code_table_e(text, abc012_table, {}, False, delimiter)

@@ -933,6 +933,6 @@ def action_31(request):
 
     output_text = ''
     output_text += 'Chemical Symbol <BR>'
-    output_text += 'Under developping'
+    output_text +=  chemical_symbol(input_text,option_1)
 
     return HttpResponse(output_text)
